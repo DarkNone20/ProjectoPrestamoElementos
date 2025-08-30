@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("Cedula" ,20)->primary();
             $table->string("Nombre",60)->nullable();
             $table->string("Alias",15)->nullable();
-            $table->string("Password",30)->nullable();
+            $table->string("Password",300)->nullable();
             $table->string("Cargo",50)->nullable();
            
         });

@@ -20,10 +20,6 @@ Route::get('/', function () {
 
 
 
-// *** RUTA DE LOGIN PARA EL FRONTEND VIA FETCH/API ***
-Route::post('/', [LoginController::class, 'apiLogin']); 
-
-
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

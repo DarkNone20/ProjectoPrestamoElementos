@@ -9,51 +9,48 @@
 <body>
     <div class="Formulario">
         <div class="group">
-            
-           
+
             @if($errors->any())
                 <div class="error-message" style="color: red; margin-bottom: 15px;">
                     {{ $errors->first('loginError') }}
                 </div>
             @endif
 
-            <Div class="Group">
+            <div class="Group">
                 <div class="Group-Uno">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-        
-                       
-                       
-                            <img src="{{ asset('Imagenes/Logo.png') }}" alt="Logo">
+
+                        <img src="{{ asset('Imagenes/Logo.png') }}" alt="Logo" class="logo">
+
                         
-        
-        
-                        <div class="form-group">
+                        <div class="form-group input-icon">
                             <label for="DocumentoId" class="sr-only">Usuario</label>
                             <input 
                                 type="text" 
                                 name="DocumentoId" 
                                 id="DocumentoId" 
-                                class="control" 
                                 value="{{ old('DocumentoId') }}" 
                                 placeholder="Usuario" 
                                 required 
                                 autofocus
                             >
+                            <img src="{{ asset('Imagenes/user.png') }}" alt="icono usuario">
                         </div>
-        
-                        <div class="form-group">
+
+                       
+                        <div class="form-group input-icon">
                             <label for="password" class="sr-only">Contraseña</label>
                             <input 
                                 type="password" 
                                 name="password" 
                                 id="password" 
-                                class="control" 
                                 placeholder="Contraseña" 
                                 required
                             >
+                            <img src="{{ asset('Imagenes/mail.png') }}" alt="icono candado">
                         </div>
-        
+
                         <div class="form-actions">
                             <button type="submit">Iniciar sesión</button>
                         </div>
@@ -63,9 +60,7 @@
                 <div class="Group-Dos">
                     <img src="{{ asset('Imagenes/Mascota.png') }}" alt="Mascota">
                 </div>
-            </Div>
-            
-            
+            </div>
         </div>
     </div>
 </body>

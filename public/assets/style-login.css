@@ -20,7 +20,7 @@ body {
     width: 70vw;
     height: 70vh;
     border-radius: 25px;
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff;
     box-shadow: 0 0 20px rgba(14, 13, 13, 0.589), 0 5px 5px rgba(3, 3, 3, 0.1);
 }
 
@@ -47,28 +47,48 @@ body {
     border-radius: 25px;
 }
 
-input {
+.logo {
+    width: 440px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.input-icon {
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 15px;
+}
+
+.input-icon input {
     outline: 0;
     background-color: rgb(234, 239, 241);
     box-shadow: 0 0 20px rgba(14, 13, 13, 0.1), 0 5px 5px rgba(3, 3, 3, 0.1);
     border-radius: 15px;
     border: 0;
     width: 100%;
-    margin-bottom: 20px;
-    padding: 10px;
-    margin-top: 4px;
+    padding: 12px 12px 12px 45px;
     font-size: 18px;
 }
 
-input:hover {
-    transform: scale(1.5vh);
+.input-icon img {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.input-icon input:hover {
+    transform: scale(1.02);
 }
 
 label {
-    color: black;
+    color: rgb(24, 7, 121);
     font-size: 25px;
-    height: 5vh;
-    margin-top: 4px;
+    margin-top: 6px;
     margin-bottom: 10px;
 }
 
@@ -82,8 +102,54 @@ button {
     border-radius: 25px;
     cursor: pointer;
     margin-top: 4px;
+    transition: 0.3s;
 }
 
 button:hover {
     background-color: rgb(3, 18, 82);
+}
+
+@media (max-width: 1024px) {
+    .Group {
+        width: 90vw;
+        height: auto;
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    .Group-Dos img {
+        width: 300px;
+        height: auto;
+        margin-top: 20px;
+    }
+    .logo {
+        width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        align-items: flex-start;
+        padding: 20px;
+    }
+    .Group {
+        width: 100%;
+        height: auto;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .Group-Dos img {
+        width: 200px;
+        height: auto;
+    }
+    .logo {
+        width: 220px;
+    }
+    input {
+        font-size: 16px;
+        padding: 10px 10px 10px 40px;
+    }
+    button {
+        height: 50px;
+        font-size: 16px;
+    }
 }

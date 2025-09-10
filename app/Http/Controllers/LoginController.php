@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Usuarios;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use App\Models\Usuarios;
 
 class LoginController extends Controller
 {
@@ -14,7 +15,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout', 'apiLogout');
     }
 
-    // --- LOGIN WEB ---
     public function showLoginForm()
     {
         return view('auth.login');
@@ -22,21 +22,26 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'DocumentoId' => 'required|string',
-            'password' => 'required|string',
+        // Validar campos
+        $credentials = $request->validate([
+            'Cedula'   => 'required|string',
+            'Password' => 'required|string',
         ]);
 
-        $usuario = Usuarios::where('Cedula', $request->DocumentoId)->first();
+        // Buscar usuario por Cedula
+        $usuario = Usuarios::where('Cedula', $credentials['Cedula'])->first();
 
-        if (!$usuario || !Hash::check($request->password, $usuario->Password)) {
-            return back()->withErrors([
-                'loginError' => 'Usuario o contraseña incorrectos',
-            ])->withInput();
+        // Verificar contraseña usando Hash
+        if ($usuario && Hash::check($credentials['Password'], $usuario->Password)) {
+            Auth::login($usuario); // Login manual
+            $request->session()->regenerate(); // Evitar session fixation
+            Log::info('Usuario autenticado', ['id' => $usuario->Cedula]);
+            return redirect()->intended('/home');
         }
 
-        Auth::login($usuario);
-        return redirect()->intended('/home');
+        return back()->withErrors([
+            'loginError' => 'Usuario o contraseña incorrectos',
+        ])->withInput();
     }
 
     public function logout(Request $request)
@@ -47,11 +52,11 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    // --- LOGIN API ---
+    // Login API
     public function apiLogin(Request $request)
     {
         $request->validate([
-            'Cedula' => 'required|string',
+            'Cedula'   => 'required|string',
             'Password' => 'required|string',
         ]);
 
@@ -68,10 +73,10 @@ class LoginController extends Controller
             'usuario' => [
                 'Cedula' => $usuario->Cedula,
                 'Nombre' => $usuario->Nombre,
-                'Alias' => $usuario->Alias,
-                'Cargo' => $usuario->Cargo
+                'Alias'  => $usuario->Alias,
+                'Cargo'  => $usuario->Cargo,
             ],
-            'token' => $token
+            'token' => $token,
         ]);
     }
 

@@ -18,35 +18,35 @@
 
             <div class="Group">
                 <div class="Group-Uno">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login.post') }}">
                         @csrf
 
                         <img src="{{ asset('Imagenes/Logo.png') }}" alt="Logo" class="logo">
 
-                        
                         <div class="form-group input-icon">
-                            <label for="DocumentoId" class="sr-only">Usuario</label>
+                            <label for="Cedula" class="sr-only">Usuario</label>
                             <input 
                                 type="text" 
-                                name="DocumentoId" 
-                                id="DocumentoId" 
-                                value="{{ old('DocumentoId') }}" 
+                                name="Cedula" 
+                                id="Cedula" 
+                                value="{{ old('Cedula') }}" 
                                 placeholder="Usuario" 
                                 required 
                                 autofocus
+                                autocomplete="username"
                             >
                             <img src="{{ asset('Imagenes/user.png') }}" alt="icono usuario">
                         </div>
 
-                       
                         <div class="form-group input-icon">
-                            <label for="password" class="sr-only">Contraseña</label>
+                            <label for="Password" class="sr-only">Contraseña</label>
                             <input 
-                                type="password" 
-                                name="password" 
-                                id="password" 
+                                type="Password" 
+                                name="Password" 
+                                id="Password" 
                                 placeholder="Contraseña" 
                                 required
+                                autocomplete="current-password"
                             >
                             <img src="{{ asset('Imagenes/mail.png') }}" alt="icono candado">
                         </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
@@ -21,5 +22,12 @@ Route::get('/', function () {
 
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/', [LoginController::class, 'login']);
+Route::post('/', [LoginController::class, 'login'])->name('login.post');
+
+// Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Página protegida
+Route::get('/home', [HomeController::class, 'showHome'])
+    //->middleware('auth')
+    ->name('home');

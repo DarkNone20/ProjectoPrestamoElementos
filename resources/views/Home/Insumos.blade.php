@@ -10,6 +10,33 @@
     <title>Insumos de Prestamos</title>
 </head>
 <body>
-    <h2>Home</h2>
+   
+
+    <div class="Encabezado"> 
+
+
+        <div class ="Logo">
+           
+        </div>
+        <div class ="Titulo">
+            <h1>Sistema de Prestamos</h1>
+        </div>
+        <div class ="Alias">
+            <p>
+                JJCASTILLO
+            </p>
+        </div>
+
+    </div>
+
+    <div class="Principal">
+        <div class="Principal-Uno">
+
+        </div>
+        <div class="Principal-Dos">
+
+        </div>
+    </div>
+
 </body>
 </html>

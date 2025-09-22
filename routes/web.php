@@ -29,5 +29,5 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Página protegida
 Route::get('/home', [HomeController::class, 'showHome'])
-    //->middleware('auth')
+    ->middleware('auth')   
     ->name('home');

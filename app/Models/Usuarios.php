@@ -13,7 +13,7 @@ class Usuarios extends Authenticatable
     /**
      * Nombre de la tabla en la base de datos
      */
-    protected $table = 'Usuarios';  
+    protected $table = 'usuarioadmin';  
 
     /**
      * Clave primaria personalizada

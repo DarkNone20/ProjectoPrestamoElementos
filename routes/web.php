@@ -3,6 +3,9 @@
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\EntregasController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +34,20 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/home', [HomeController::class, 'showHome'])
     ->middleware('auth')   
     ->name('home');
+//Usuarios
+
+Route::resource('usuarios', UsuarioController::class)->except(['show']);
+Route::delete('usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
+
+//Entregas
+// Ruta para mostrar el formulario de creación de entrega (GET)
+Route::get('/entregas/create', [EntregasController::class, 'create'])->name('entregas.create');
+
+// Ruta para procesar el envío del formulario y almacenar la entrega (POST)
+Route::post('/entregas', [EntregasController::class, 'store'])->name('entregas.store');
+
+// Opcional: Ruta para mostrar la lista de todas las entregas
+Route::get('/entregas', [EntregasController::class, 'index'])->name('entregas.index');
+
+// Puedes usar Route::resource si tienes un CRUD completo
+// Route::resource('entregas', EntregasController::class);

@@ -174,12 +174,12 @@ nav.active~.Encabezado {
 }
 
 
-/* principal */
+/* Sección principal */
 
 .Principal {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 4rem;
     padding: 2rem;
     transition: margin-left 0.3s;
@@ -193,36 +193,16 @@ nav.active~.Principal {
 .Principal-Dos,
 .Principal-Tres,
 .Principal-Cuatro {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 4rem;
 }
 
-.P-Uno {
-    background: #35b6f1;
-    padding: 2rem;
-    margin: 5%;
-}
-
-.P-Dos {
-    background: #1d81af;
-    padding: 2rem;
-    margin: 5%;
-}
-
-.P-Tres {
-    background: #064664;
-    padding: 2rem;
-    margin: 5%;
-}
-
 .Grafic {
     flex: 1;
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 50% 50%;
     gap: 1rem;
     padding: 2rem;
     height: 50vh;

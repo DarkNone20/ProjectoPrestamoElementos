@@ -85,4 +85,6 @@ class LoginController extends Controller
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Sesión cerrada correctamente']);
     }
+
+    
 }

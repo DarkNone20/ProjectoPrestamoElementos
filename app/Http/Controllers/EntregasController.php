@@ -16,8 +16,7 @@ class EntregasController extends Controller
      */
     public function create()
     {
-        // Esta función simplemente carga la vista que contiene el formulario.
-        // El formulario ya está diseñado para ser moderno y responsive.
+        // Carga la vista del formulario principal de entregas
         return view('Entregas.entregas');
     }
 
@@ -30,42 +29,41 @@ class EntregasController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validación de los datos del formulario
         try {
+            // 1️⃣ Validación de datos
             $validatedData = $request->validate([
                 'Articulo' => 'required|string|max:255',
-                'Nombre' => 'required|string|max:255',
-                'Fecha' => 'required|date', 
+                'Nombre'   => 'required|string|max:255',
+                'Fecha'    => 'required|date',
             ]);
 
-            // 2. Crear una nueva instancia del modelo Entrega y asignar los datos
+            // 2️⃣ Crear registro
             Entregas::create($validatedData);
 
-           
-            // 3. Redirigir al usuario con un mensaje de éxito
+            // 3️⃣ Redirigir con mensaje de éxito
             return redirect()->route('entregas.create')->with('success', '¡Entrega registrada exitosamente!');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            
             Log::error('Error de validación al registrar entrega: ' . $e->getMessage());
             return redirect()->back()->withErrors($e->errors())->withInput();
 
         } catch (\Exception $e) {
-            // Captura cualquier otro error inesperado
             Log::error('Error inesperado al registrar entrega: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Hubo un error al registrar la entrega. Por favor, inténtalo de nuevo.')->withInput();
         }
     }
 
     /**
-     * Muestra una lista de todas las entregas (opcional, para una vista de listado).
+     * Muestra una lista de todas las entregas registradas.
+     * Ahora usará la misma vista entregas.blade.php para mostrar el listado.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $entregas = Entregas::all(); 
-        return view('Entregas.listado', compact('entregas')); 
-    }
+        $entregas = Entregas::all();
 
+        // 🔹 Usamos la misma vista entregas.blade.php
+        return view('Entregas.entregas', compact('entregas'));
+    }
 }

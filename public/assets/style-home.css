@@ -202,21 +202,34 @@ nav.active~.Principal {
 }
 
 .P-Uno {
-    background: #35b6f1;
+    background: #9b1010;
     padding: 2rem;
     margin: 5%;
+    height: 80%;
+    width: 80%;
+}
+
+.P-Uno img {
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
 }
 
 .P-Dos {
     background: #1d81af;
     padding: 2rem;
     margin: 5%;
+    height: 80%;
+    width: 80%;
 }
 
 .P-Tres {
     background: #064664;
     padding: 2rem;
     margin: 5%;
+    height: 80%;
+    width: 80%;
 }
 
 .Grafic {

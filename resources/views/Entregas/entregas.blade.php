@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sistemas de Entregas</title>
-    <!-- Bootstrap CSS -->
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <!-- Tu CSS personalizado (si es necesario) -->
+   
     <link rel="stylesheet" href="{{ asset('assets/style-entregas.css') }}">
-    <!-- Font Awesome para iconos (opcional pero recomendado) -->
+   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -17,7 +17,7 @@
     <div class="Encabezado bg-primary text-white py-3 shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="Logo">
-                <!-- Puedes poner tu logo aquí -->
+                <!-- Logo -->
                 <img src="{{ asset('Imagenes/Icon.png') }}" alt="Logo" class="img-fluid" style="max-height: 50px;">
             </div>
             <div class="Titulo">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="card-body p-4 p-md-5">
                         <form action="{{ route('entregas.store') }}" method="POST" class="needs-validation" novalidate>
-                            @csrf <!-- Token CSRF de Laravel para seguridad -->
+                            @csrf 
 
                             <div class="mb-4">
                                 <label for="Articulo" class="form-label fs-5 fw-semibold">Artículo:</label>
@@ -54,9 +54,19 @@
                             </div>
 
                             <div class="mb-4">
-                                <label for="Nombre" class="form-label fs-5 fw-semibold">Nombre del Receptor:</label>
+                                <label for="Nombre" class="form-label fs-5 fw-semibold">Nombre del Auxiliar:</label>
                                 <input type="text" id="Nombre" name="Nombre" class="form-control form-control-lg @error('Nombre') is-invalid @enderror" placeholder="Nombre completo de quien recibe" value="{{ old('Nombre') }}" required>
                                 @error('Nombre')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="Caso" class="form-label fs-5 fw-semibold">Caso:</label>
+                                <input type="text" id="Caso" name="Caso" class="form-control form-control-lg @error('Caso') is-invalid @enderror" placeholder="Numero del caso del solicitante" value="{{ old('Articulo') }}" required>
+                                @error('Caso')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

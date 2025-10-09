@@ -15,7 +15,7 @@ class Usuarios extends Authenticatable
     public $incrementing = false;    
     protected $keyType = 'string';   
 
-    // 👇 Esto evita que intente usar created_at / updated_at
+ 
     public $timestamps = false;
 
     protected $fillable = [

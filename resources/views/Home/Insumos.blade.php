@@ -53,6 +53,17 @@
   <div class="Principal">
     <div class="Principal-Uno">
       <div class="P-Uno">
+        
+      </div>
+      <div class="P-Dos">
+
+      </div>
+      <div class="P-Tres">
+
+      </div>
+    </div>
+    <div class="Principal-Dos">
+      <div class="P-Uno">
 
       </div>
       <div class="P-Dos">
@@ -62,9 +73,28 @@
 
       </div>
     </div>
-    <div class="Principal-Dos"></div>
-    <div class="Principal-Tres"></div>
-    <div class="Principal-Cuatro"></div>
+    <div class="Principal-Tres">
+      <div class="P-Uno">
+
+      </div>
+      <div class="P-Dos">
+
+      </div>
+      <div class="P-Tres">
+
+      </div>
+    </div>
+    <div class="Principal-Cuatro">
+      <div class="P-Uno">
+
+      </div>
+      <div class="P-Dos">
+
+      </div>
+      <div class="P-Tres">
+
+      </div>
+    </div>
   </div>
 
   <div class="Grafic">

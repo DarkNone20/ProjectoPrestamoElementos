@@ -15,7 +15,10 @@ return new class extends Migration
     {
         Schema::create('entregas', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('Articulo');
+            $table->string('Nombre');
+            $table->date('Fecha');
+            $table->timestamps(); // created_at y updated_at
         });
     }
 

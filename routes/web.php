@@ -48,6 +48,7 @@ Route::post('/entregas', [EntregasController::class, 'store'])->name('entregas.s
 
 // Opcional: Ruta para mostrar la lista de todas las entregas
 Route::get('/entregas', [EntregasController::class, 'index'])->name('entregas.index');
+Route::post('/entregas', [EntregasController::class, 'store'])->name('entregas.store');
 
-// Puedes usar Route::resource si tienes un CRUD completo
-// Route::resource('entregas', EntregasController::class);
+
+

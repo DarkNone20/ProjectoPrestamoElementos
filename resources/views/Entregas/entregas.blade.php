@@ -17,8 +17,7 @@
     <div class="Encabezado bg-primary text-white py-3 shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="Logo">
-                <!-- Logo -->
-                <img src="{{ asset('Imagenes/Icon.png') }}" alt="Logo" class="img-fluid" style="max-height: 50px;">
+                
             </div>
             <div class="Titulo">
                 <h1 class="h3 mb-0">Gestión de Entregas</h1>

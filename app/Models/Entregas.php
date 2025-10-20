@@ -14,6 +14,7 @@ class Entregas extends Model
     protected $fillable = [
         'Articulo',
         'Nombre',
+        'Caso',
         'Fecha',
     ];
 }

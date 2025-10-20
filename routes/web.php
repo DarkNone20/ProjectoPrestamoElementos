@@ -1,29 +1,13 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\EntregasController;
+use App\Http\Controllers\EntregasTablasController;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-/*
-Route::get('/', function () {
-    return view('welcome');
-});*/
-
-
-
+// Página principal → Login
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login'])->name('login.post');
 
@@ -32,23 +16,26 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Página protegida
 Route::get('/home', [HomeController::class, 'showHome'])
-    ->middleware('auth')   
+    ->middleware('auth')
     ->name('home');
-//Usuarios
 
+// ==========================
+// USUARIOS
+// ==========================
 Route::resource('usuarios', UsuarioController::class)->except(['show']);
 Route::delete('usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
 
-//Entregas
-// Ruta para mostrar el formulario de creación de entrega (GET)
+// ==========================
+// ENTREGAS 
+// ==========================
 Route::get('/entregas/create', [EntregasController::class, 'create'])->name('entregas.create');
-
-// Ruta para procesar el envío del formulario y almacenar la entrega (POST)
 Route::post('/entregas', [EntregasController::class, 'store'])->name('entregas.store');
-
-// Opcional: Ruta para mostrar la lista de todas las entregas
 Route::get('/entregas', [EntregasController::class, 'index'])->name('entregas.index');
-Route::post('/entregas', [EntregasController::class, 'store'])->name('entregas.store');
 
-
+// ==========================
+// TABLA DE ENTREGAS 
+// ==========================
+Route::get('/entregas/tablas', [EntregasTablasController::class, 'index'])->name('entregas.tablas');
+Route::get('/entregas/{id}/edit', [EntregasTablasController::class, 'edit'])->name('entregas.edit');
+Route::put('/entregas/{id}', [EntregasTablasController::class, 'update'])->name('entregas.update');
 

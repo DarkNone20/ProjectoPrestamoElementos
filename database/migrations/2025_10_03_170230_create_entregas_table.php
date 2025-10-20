@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('Articulo');
             $table->string('Nombre');
+            $table->integer('Caso');
             $table->date('Fecha');
             $table->timestamps(); // created_at y updated_at
         });

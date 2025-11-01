@@ -64,7 +64,7 @@
 
                             <div class="mb-4">
                                 <label for="Caso" class="form-label fs-5 fw-semibold">Caso:</label>
-                                <input type="text" id="Caso" name="Caso" class="form-control form-control-lg @error('Caso') is-invalid @enderror" placeholder="Numero del caso del solicitante" value="{{ old('Articulo') }}" required>
+                                <input type="text" id="Caso" name="Caso" class="form-control form-control-lg @error('Caso') is-invalid @enderror" placeholder="Numero del caso del solicitante" value="{{ old('Caso') }}" required>
                                 @error('Caso')
                                     <div class="invalid-feedback">
                                         {{ $message }}

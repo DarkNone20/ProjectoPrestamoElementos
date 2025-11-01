@@ -34,7 +34,7 @@ class EntregasController extends Controller
             $validatedData = $request->validate([
                 'Articulo' => 'required|string|max:255',
                 'Nombre'   => 'required|string|max:255',
-                'Caso'     => 'required|integer|min:1',
+                'Caso' => 'required|numeric',
                 'Fecha'    => 'required|date',
             ]);
 
@@ -72,7 +72,7 @@ class EntregasController extends Controller
             $validatedData = $request->validate([
                 'Articulo' => 'required|string|max:255',
                 'Nombre'   => 'required|string|max:255',
-                'Caso'     => 'required|integer|min:1',
+                'Caso' => 'required|numeric',
                 'Fecha'    => 'required|date',
             ]);
 

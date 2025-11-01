@@ -9,10 +9,10 @@ class EntregasTablasController extends Controller
 {
     public function index(Request $request)
     {
-        // Número de registros por página (puedes ajustarlo)
+        
         $porPagina = 10;
 
-        // Obtener entregas ordenadas con paginación
+        
         $entregas = Entregas::orderBy('Fecha', 'desc')->paginate($porPagina);
 
         return view('entregastablas', compact('entregas'));
@@ -29,7 +29,7 @@ class EntregasTablasController extends Controller
         $request->validate([
             'Articulo' => 'required|string|max:255',
             'Nombre'   => 'required|string|max:255',
-            'Caso'     => 'required|integer|min:1',
+            'Caso' => 'required|numeric',
             'Fecha'    => 'required|date',
         ]);
 

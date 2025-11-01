@@ -1,12 +1,14 @@
-/* Reset general y box-sizing para todos los elementos */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
 /* Estructura base */
-html, body {
+
+html,
+body {
     height: 100%;
 }
 
@@ -20,15 +22,13 @@ body {
 }
 
 main {
-    flex: 1; /* Empuja el footer hacia abajo */
+    flex: 1;
 }
 
-/* Gradiente azul */
 .bg-gradient-primary {
     background: linear-gradient(135deg, #007bff, #0056b3);
 }
 
-/* Encabezado */
 .Encabezado {
     border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 }
@@ -47,7 +47,6 @@ main {
     transform: scale(1.1);
 }
 
-/* Formularios dentro de tarjetas */
 .card-header h2 {
     font-weight: 600;
     letter-spacing: 0.8px;
@@ -71,7 +70,9 @@ main {
     box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
 }
 
+
 /* Botones */
+
 .btn-lg {
     padding: 0.75rem 1.5rem;
     font-size: 1.15rem;
@@ -104,7 +105,9 @@ main {
     box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
 }
 
+
 /* Footer */
+
 footer {
     margin-top: auto;
     background-color: #212529;
@@ -114,7 +117,9 @@ footer {
     border-top: 3px solid rgba(255, 255, 255, 0.1);
 }
 
+
 /* Responsivo */
+
 @media (max-width: 768px) {
     .Encabezado .Titulo h1 {
         font-size: 1.5rem;

@@ -29,13 +29,36 @@ main {
     background: linear-gradient(135deg, #007bff, #0056b3);
 }
 
+
+/* === ENCABEZADO === */
+
 .Encabezado {
     border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 }
 
+.Encabezado .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.Encabezado .Titulo {
+    flex: 1;
+    text-align: center;
+}
+
 .Encabezado .Titulo h1 {
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-align: center;
+}
+
+.Encabezado .Alias {
+    position: absolute;
+    right: 15px;
+    display: flex;
+    align-items: center;
 }
 
 .Encabezado .Alias img {
@@ -47,10 +70,16 @@ main {
     transform: scale(1.1);
 }
 
+
+/* Header de tarjetas */
+
 .card-header h2 {
     font-weight: 600;
     letter-spacing: 0.8px;
 }
+
+
+/* Formularios */
 
 .form-label {
     color: #495057;
@@ -103,6 +132,19 @@ main {
     color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
+}
+
+.btn-editar {
+    background-color: #0d6efd;
+    border-color: #0b5ed7;
+    color: white;
+    transition: 0.2s ease-in-out;
+}
+
+.btn-editar:hover {
+    background-color: #084298;
+    border-color: #052c65;
+    transform: translateY(-2px);
 }
 
 

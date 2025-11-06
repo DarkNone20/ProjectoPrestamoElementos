@@ -1,5 +1,3 @@
-/* Reset general y box-sizing para todos los elementos */
-
 * {
     margin: 0;
     padding: 0;
@@ -9,28 +7,23 @@
 body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     background-color: #f0f2f5;
-    /* Un gris más suave */
     color: #343a40;
-    /* Texto más oscuro */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 
-/* Clases de utilidad para gradientes */
+/* gradientes */
 
 .bg-gradient-primary {
     background: linear-gradient(135deg, #007bff, #0056b3);
-    /* Azul vibrante */
 }
 
 
 /* Encabezado */
 
 .Encabezado {
-    /* Las clases de Bootstrap como bg-primary, text-white, py-3, shadow-sm ya hacen mucho */
-    /* Ajustes mínimos si los necesitas, pero Bootstrap maneja la mayoría */
     border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -114,13 +107,12 @@ body {
 /* Footer */
 
 footer {
-    /* Las clases de Bootstrap como bg-dark, text-white, py-3 ya hacen mucho */
     font-size: 0.9rem;
     border-top: 3px solid rgba(255, 255, 255, 0.1);
 }
 
 
-/* Media Queries (Bootstrap ya maneja gran parte de esto) */
+/* Media Queries */
 
 @media (max-width: 768px) {
     .Encabezado .Titulo h1 {
@@ -128,7 +120,6 @@ footer {
     }
     .Encabezado .Alias p {
         display: none !important;
-        /* Oculta el nombre en móviles pequeños */
     }
     .card-body {
         padding: 1.5rem;

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Entregas;
 use Illuminate\Support\Facades\Log;
+use App\Mail\NuevaEntregaMail;
+use Illuminate\Support\Facades\Mail;
+
 
 class EntregasController extends Controller
 {
@@ -37,22 +40,24 @@ class EntregasController extends Controller
                 'Caso' => 'required|numeric',
                 'Fecha'    => 'required|date',
             ]);
-
-            Entregas::create($validatedData);
-
+    
+            $entrega = Entregas::create($validatedData);
+    
+       //Correo
+       Mail::to(['jjcastillo@icesi.edu.co', 'camosquera@icesi.edu.co'])
+       ->send(new NuevaEntregaMail($entrega));
+   
+    
             return redirect()
                 ->route('entregas.index')
-                ->with('success', '¡Entrega registrada exitosamente!');
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            Log::error('Error de validación al registrar entrega: ' . $e->getMessage());
-            return redirect()->back()->withErrors($e->errors())->withInput();
-
+                ->with('success', '¡Entrega registrada y correo enviado correctamente!');
+    
         } catch (\Exception $e) {
-            Log::error('Error inesperado al registrar entrega: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Hubo un error al registrar la entrega.')->withInput();
+            Log::error('Error al registrar entrega o enviar correo: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Hubo un error.')->withInput();
         }
     }
+    
 
     /**
      * Muestra el formulario para editar una entrega existente.

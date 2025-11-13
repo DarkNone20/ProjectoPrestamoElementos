@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #ffffff;
+    color: #343a40;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/* Contenedor principal */
+
+.container {
+    max-width: 650px;
+}
+
+
+/* Tarjeta del formulario */
+
+.card {
+    border: none;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+    padding: 2rem;
+}
+
+
+/* Titulo */
+
+.card h3 {
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #2c3e50;
+}
+
+
+/* Labels */
+
+.form-label {
+    color: #495057;
+    margin-bottom: 0.55rem;
+    font-weight: 600;
+}
+
+
+/* Inputs */
+
+.form-control-lg {
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    border: 1px solid #ced4da;
+    box-shadow: 0 0 0 transparent;
+    transition: border-color .25s ease-in-out, box-shadow .25s ease-in-out;
+}
+
+.form-control-lg:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 .25rem rgba(0, 123, 255, .25);
+}
+
+
+/* Botón principal */
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: .2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 123, 255, .25);
+}
+
+
+/* Botón secundario */
+
+.btn-outline-secondary {
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: .2s ease-in-out;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(108, 117, 125, .25);
+}
+
+
+/* Responsividad */
+
+@media (max-width: 768px) {
+    .card {
+        padding: 1.5rem;
+    }
+    .btn-lg {
+        width: 100%;
+        display: block;
+        margin-top: 10px;
+    }
+}

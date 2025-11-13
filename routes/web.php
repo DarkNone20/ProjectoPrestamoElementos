@@ -6,15 +6,23 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\EntregasController;
 use App\Http\Controllers\EntregasTablasController;
+use App\Http\Controllers\PrestamosController;
 
-// Página principal → Login
+
+// // ==========================
+// Login
+// ==========================
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login'])->name('login.post');
 
+// ==========================
 // Logout
+// ==========================
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Página protegida
+// ==========================
+// Paginacion
+// ==========================
 Route::get('/home', [HomeController::class, 'showHome'])
     ->middleware('auth')
     ->name('home');
@@ -38,4 +46,13 @@ Route::get('/entregas', [EntregasController::class, 'index'])->name('entregas.in
 Route::get('/entregas/tablas', [EntregasTablasController::class, 'index'])->name('entregas.tablas');
 Route::get('/entregas/{id}/edit', [EntregasTablasController::class, 'edit'])->name('entregas.edit');
 Route::put('/entregas/{id}', [EntregasTablasController::class, 'update'])->name('entregas.update');
+
+// ==========================
+// TABLA DE PRESTAMOS 
+// ==========================
+
+Route::get('/prestamos', [PrestamosController::class, 'index'])->name('prestamos.index');
+Route::get('/prestamos/create', [PrestamosController::class, 'create'])->name('prestamos.create');
+Route::post('/prestamos', [PrestamosController::class, 'store'])->name('prestamos.store');
+
 

@@ -34,7 +34,7 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'Cedula' => 'required|string|max:20|unique:UsuariosAdmin,Cedula',
+            'Cedula' => 'required|string|max:20|unique:usuarioadmin,Cedula',
             'Nombre' => 'required|string|max:50',
             'Alias' => 'nullable|string|max:50',
             'Password' => 'required|string|min:6',

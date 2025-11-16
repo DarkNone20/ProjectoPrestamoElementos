@@ -6,31 +6,24 @@ use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-
-
 class UsuarioController extends Controller
 {
     public function index(Request $request)
     {
-        $paginaActual = $request->input('pagina', 1); 
-        $elementosPorPagina = $request->input('per_page', 10);
-    
-        $query = Usuarios::query();
-        $totalElementos = $query->count();
-        $totalPaginas = ceil($totalElementos / $elementosPorPagina);
-    
-        $usuarios = $query
-            ->skip(($paginaActual - 1) * $elementosPorPagina)
-            ->take($elementosPorPagina)
-            ->get();
-    
+        $elementosPorPagina = 5;
+        
+        // Usar paginación automática de Laravel
+        $usuarios = Usuarios::paginate($elementosPorPagina);
+        
         // Obtener el usuario autenticado
         $usuarioAutenticado = auth()->user();
-    
-        return view('Usuarios.usuarios', compact('usuarios', 'paginaActual', 'totalPaginas', 'elementosPorPagina', 'usuarioAutenticado'));
+        
+        return view('Usuarios.usuarios', compact(
+            'usuarios',
+            'usuarioAutenticado'
+        ));
     }
 
-    
     public function store(Request $request)
     {
         $validatedData = $request->validate([

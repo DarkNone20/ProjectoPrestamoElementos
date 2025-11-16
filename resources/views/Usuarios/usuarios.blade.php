@@ -194,6 +194,37 @@
             </tbody>
           </table>
         </div>
+
+        {{-- =============================================== --}}
+        {{-- ========= INICIO: SECCIÓN DE PAGINACIÓN ========= --}}
+        {{-- =============================================== --}}
+        
+        @if ($usuarios->hasPages())
+        <div class="card-footer pagination-footer d-flex justify-content-between align-items-center">
+            
+            {{-- Información de resultados --}}
+            <div class="pagination-info text-muted">
+                Mostrando
+                <span class="fw-bold">{{ $usuarios->firstItem() }}</span>
+                a
+                <span class="fw-bold">{{ $usuarios->lastItem() }}</span>
+                de
+                <span class="fw-bold">{{ $usuarios->total() }}</span>
+                resultados
+            </div>
+    
+            {{-- Links de paginación con la plantilla explícita de Bootstrap 5 --}}
+            <div>
+                {{ $usuarios->links('pagination::bootstrap-5') }}
+            </div>
+    
+        </div>
+        @endif
+    
+        {{-- =============================================== --}}
+        {{-- =========== FIN: SECCIÓN DE PAGINACIÓN ========== --}}
+        {{-- =============================================== --}}
+
       </div>
     </div>
   </div>

@@ -34,7 +34,7 @@
     <div class="container mt-5 mb-5">
         <div class="card shadow-lg border-0 rounded-4">
             <div class="card-header bg-gradient-primary text-white text-center py-4 rounded-top-4">
-                <h2 class="mb-0"><i class="fas fa-table me-2"></i>Entregas Registradas</h2>
+                <h2 class="mb-0">Entregas Registradas</h2>
             </div>
             <div class="card-body p-4 p-md-5">
 

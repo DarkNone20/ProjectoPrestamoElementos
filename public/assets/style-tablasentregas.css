@@ -79,6 +79,39 @@ main {
 }
 
 
+/* --- Blue themed card & table (match style-usuarios) --- */
+
+.card {
+    border: none;
+    border-top: 5px solid #509af0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.card:hover {
+    box-shadow: 0 12px 30px rgba(80, 154, 240, 0.12);
+    transform: translateY(-3px);
+}
+
+.card .card-header {
+    background: linear-gradient(135deg, #4a8fe7 0%, #2e7fc9 50%, #0f5fb9 100%);
+    color: #fff;
+    border: none;
+    padding: 1.25rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+}
+
+.card .card-header::before {
+    font-size: 1.25rem;
+}
+
+
 /* Formularios */
 
 .form-label {
@@ -148,6 +181,25 @@ main {
 }
 
 
+/* Delete button style to match the rest */
+
+.btn-eliminar {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.45rem 0.8rem;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-eliminar:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+
 /* paginación */
 
 .pagination {
@@ -205,4 +257,48 @@ footer {
         margin-right: 0 !important;
         margin-bottom: 1rem;
     }
+    /* Table and header adjustments on small screens */
+    .card .card-header {
+        padding: 0.9rem 0.8rem;
+        font-size: 1rem;
+    }
+    .table thead th {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.5rem;
+    }
+    .table tbody td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.85rem;
+    }
+}
+
+
+/* Table stylings to match the blue theme */
+
+.table thead {
+    background: linear-gradient(135deg, #0f5fb9 0%, #0620b4 100%) !important;
+}
+
+.table thead th {
+    color: #190ab8 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-weight: 700;
+}
+
+.table tbody tr:hover {
+    background-color: #87b9f0;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #e6f2ff;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #d9ecff;
+}
+
+.table .btn-editar,
+.table .btn-eliminar {
+    margin-left: 0.4rem;
 }

@@ -27,7 +27,7 @@
         <li><a href="{{ asset('home') }}"><img src="{{ asset('Imagenes/Home.png') }}" alt="inicio"> Home</a></li>
         <li><a href="{{ asset(path: 'usuarios') }}"><img src="{{ asset('Imagenes/Group.png') }}" alt="user">
             Usuarios</a></li>
-        <li><a href="#"><img src="{{ asset(path: 'Imagenes/Elementos.png') }}" alt="grupos"> Isumos</a></li>
+        <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset(path: 'Imagenes/Elementos.png') }}" alt="grupos"> Isumos</a></li>
         <li><a href="#"><img src="{{ asset(path: 'Imagenes/lista.png') }}" alt="equipos"> Entregas</a></li>
       </div>
       <div class="Prueba">

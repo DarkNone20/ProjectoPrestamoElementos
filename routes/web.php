@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntregasController;
 use App\Http\Controllers\EntregasTablasController;
 use App\Http\Controllers\PrestamosController;
@@ -28,7 +29,12 @@ Route::get('/home', [HomeController::class, 'showHome'])
     ->name('home');
 
 // ==========================
-// USUARIOS
+// USUARIOS 
+// ==========================
+Route::resource('user', UserController::class)->except(['show']);
+Route::delete('user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+// ==========================
+// USUARIOS ADMIN
 // ==========================
 Route::resource('usuarios', UsuarioController::class)->except(['show']);
 Route::delete('usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');

@@ -10,7 +10,7 @@ class UsuarioController extends Controller
 {
     public function index(Request $request)
     {
-        $elementosPorPagina = 5;
+        $elementosPorPagina = 4;
         
         // Usar paginación automática de Laravel
         $usuarios = Usuarios::paginate($elementosPorPagina);

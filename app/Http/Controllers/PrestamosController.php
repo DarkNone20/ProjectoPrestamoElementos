@@ -9,8 +9,13 @@ class PrestamosController extends Controller
 {
     public function index()
     {
+
+ // Usuario logueado (con Alias y Nombre)
+        $usuarioAutenticado = auth()->user();
+
+
         $prestamos = Prestamos::orderBy('created_at', 'desc')->get();
-        return view('Prestamos.index', compact('prestamos'));
+        return view('Prestamos.index', compact('prestamos','usuarioAutenticado'));
     }
 
     public function create()

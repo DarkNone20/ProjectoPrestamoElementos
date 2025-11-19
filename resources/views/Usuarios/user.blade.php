@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{{ asset('assets/style-usuarios.css') }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <title>Gestión de Usuarios</title>
+
+  {{-- Bootstrap y tu CSS personalizado --}}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="{{ asset('assets/style-usuarios.css') }}">
 </head>
 <body>
 
@@ -21,12 +23,14 @@
       <li class="logo">
         <img src="{{ asset('Imagenes/Logo5.png') }}" alt="Logo">
       </li>
+
       <div class="Menu">
         <li><a href="{{ route('home') }}"><img src="{{ asset('Imagenes/Home.png') }}" alt="Inicio"> Home</a></li>
         <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}" alt="Usuarios"> Usuarios</a></li>
         <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/Elementos.png') }}" alt="Insumos"> Insumos</a></li>
         <li><a href="{{ route('entregas.index') }}"><img src="{{ asset('Imagenes/lista.png') }}" alt="Entregas"> Entregas</a></li>
       </div>
+
       <div class="Prueba">
         <li>
           <a href="{{ route('logout') }}"
@@ -48,7 +52,7 @@
     <div class="Encabezado">
       <div class="Logo"></div>
       <div class="Titulo">
-        <h1>Gestión de Usuarios Administrador</h1>
+        <h1>Gestión de Usuarios</h1>
       </div>
       <div class="Alias">
         <a href="#">
@@ -63,14 +67,14 @@
       <div class="Principal-Uno">
         {{-- Mensajes de éxito y errores --}}
         @if(session('success'))
-          <div class="alert alert-success text-center">{{ session('success') }}</div>
+          <div class="alert alert-success text-center"><i class="bi bi-check-circle-fill"></i> {{ session('success') }}</div>
         @endif
 
         @if($errors->any())
           <div class="alert alert-danger">
             <ul class="mb-0">
               @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
+                <li><i class="bi bi-exclamation-triangle-fill"></i> {{ $error }}</li>
               @endforeach
             </ul>
           </div>
@@ -84,16 +88,15 @@
             </h2>
           </div>
           <div class="card-body form-body">
-            <form action="{{ route('usuarios.store') }}" method="POST" class="form-improved">
+            <form action="{{ route('user.store') }}" method="POST" class="form-improved">
               @csrf
               <div class="form-container">
-                {{-- Tus campos del formulario aquí --}}
                 <div class="form-group">
                   <label class="form-label" for="Cedula">
                     <span class="label-text">Cédula</span>
                     <span class="required">*</span>
                   </label>
-                  <input type="text" id="Cedula" name="Cedula" class="form-control form-input @error('Cedula') is-invalid @enderror" required placeholder="Ej: 123456789">
+                  <input type="text" id="Cedula" name="Cedula" class="form-control form-input @error('Cedula') is-invalid @enderror" required placeholder="Ej: 123456789" value="{{ old('Cedula') }}">
                   @error('Cedula')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
@@ -104,7 +107,7 @@
                     <span class="label-text">Nombre</span>
                     <span class="required">*</span>
                   </label>
-                  <input type="text" id="Nombre" name="Nombre" class="form-control form-input @error('Nombre') is-invalid @enderror" required placeholder="Nombre completo">
+                  <input type="text" id="Nombre" name="Nombre" class="form-control form-input @error('Nombre') is-invalid @enderror" required placeholder="Nombre completo" value="{{ old('Nombre') }}">
                   @error('Nombre')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
@@ -114,7 +117,7 @@
                   <label class="form-label" for="Alias">
                     <span class="label-text">Alias</span>
                   </label>
-                  <input type="text" id="Alias" name="Alias" class="form-control form-input @error('Alias') is-invalid @enderror" placeholder="Nombre de usuario (opcional)">
+                  <input type="text" id="Alias" name="Alias" class="form-control form-input @error('Alias') is-invalid @enderror" placeholder="Nombre de usuario (opcional)" value="{{ old('Alias') }}">
                   @error('Alias')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
@@ -135,8 +138,18 @@
                   <label class="form-label" for="Cargo">
                     <span class="label-text">Cargo</span>
                   </label>
-                  <input type="text" id="Cargo" name="Cargo" class="form-control form-input @error('Cargo') is-invalid @enderror" placeholder="Ej: Administrador (opcional)">
+                  <input type="text" id="Cargo" name="Cargo" class="form-control form-input @error('Cargo') is-invalid @enderror" placeholder="Ej: Administrador " value="{{ old('Cargo') }}">
                   @error('Cargo')
+                    <small class="form-error">{{ $message }}</small>
+                  @enderror
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="Correo">
+                    <span class="label-text">Correo</span>
+                  </label>
+                  <input type="email" id="Correo" name="Correo" class="form-control form-input @error('Correo') is-invalid @enderror" placeholder="correo@icesi.edu.co " value="{{ old('Correo') }}">
+                  @error('Correo')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
                 </div>
@@ -158,7 +171,9 @@
       <div class="Principal-Dos">
         {{-- TABLA DE USUARIOS --}}
         <div class="card">
-          <div class="card-header">Lista de Usuarios</div>
+          <div class="card-header">
+            <i class="bi bi-people-fill"></i> Lista de Usuarios
+          </div>
           <div class="table-responsive">
             <table class="table table-striped text-center align-middle mb-0">
               <thead class="table-dark">
@@ -178,71 +193,75 @@
                   <td>{{ $u->Alias }}</td>
                   <td>{{ $u->Cargo }}</td>
                   <td>
-                    <div class="d-flex justify-content-center gap-2">
-                      <form action="{{ route('usuarios.destroy', $u->Cedula) }}" method="POST"
-                            onsubmit="return confirm('¿Seguro que deseas eliminar este usuario?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm">
-                          <i class="bi bi-trash"></i> Eliminar
-                        </button>
-                      </form>
-                    </div>
+                    <form action="{{ route('user.destroy', $u->Cedula) }}" method="POST"
+                          onsubmit="return confirm('¿Seguro que deseas eliminar este usuario?')">
+                      @csrf
+                      @method('DELETE')
+                      <button class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i> Eliminar</button>
+                    </form>
                   </td>
                 </tr>
                 @empty
                 <tr>
-                  <td colspan="5" class="text-muted">No hay usuarios registrados</td>
+                  <td colspan="5" class="text-muted py-4">No hay usuarios registrados</td>
                 </tr>
                 @endforelse
               </tbody>
             </table>
           </div>
 
-          {{-- PAGINACIÓN --}}
+          {{-- =============================================== --}}
+          {{-- ========= INICIO: SECCIÓN DE PAGINACIÓN ========= --}}
+          {{-- =============================================== --}}
+          
           @if ($usuarios->hasPages())
           <div class="card-footer pagination-footer d-flex justify-content-between align-items-center">
-            <div class="pagination-info text-muted">
-              Mostrando
-              <span class="fw-bold">{{ $usuarios->firstItem() }}</span>
-              a
-              <span class="fw-bold">{{ $usuarios->lastItem() }}</span>
-              de
-              <span class="fw-bold">{{ $usuarios->total() }}</span>
-              resultados
-            </div>
+              
+              {{-- Información de resultados --}}
+              <div class="pagination-info text-muted">
+                  Mostrando
+                  <span class="fw-bold">{{ $usuarios->firstItem() }}</span>
+                  a
+                  <span class="fw-bold">{{ $usuarios->lastItem() }}</span>
+                  de
+                  <span class="fw-bold">{{ $usuarios->total() }}</span>
+                  resultados
+              </div>
 
-            <ul class="pagination mb-0">
-              <li class="page-item {{ $usuarios->onFirstPage() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $usuarios->previousPageUrl() }}" aria-label="Anterior">
-                  &laquo;
-                </a>
-              </li>
+              {{-- Paginación manual --}}
+              <ul class="pagination mb-0">
+                  {{-- Botón Anterior --}}
+                  <li class="page-item {{ $usuarios->onFirstPage() ? 'disabled' : '' }}">
+                      <a class="page-link" href="{{ $usuarios->previousPageUrl() }}" aria-label="Anterior">
+                          &laquo;
+                      </a>
+                  </li>
 
-              @foreach ($usuarios->getUrlRange(1, $usuarios->lastPage()) as $page => $url)
-                <li class="page-item {{ $usuarios->currentPage() == $page ? 'active' : '' }}">
-                  <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                </li>
-              @endforeach
+                  {{-- Números de página --}}
+                  @foreach ($usuarios->getUrlRange(1, $usuarios->lastPage()) as $page => $url)
+                      <li class="page-item {{ $usuarios->currentPage() == $page ? 'active' : '' }}">
+                          <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                      </li>
+                  @endforeach
 
-              <li class="page-item {{ $usuarios->currentPage() == $usuarios->lastPage() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $usuarios->nextPageUrl() }}" aria-label="Siguiente">
-                  &raquo;
-                </a>
-              </li>
-            </ul>
+                  {{-- Botón Siguiente --}}
+                  <li class="page-item {{ $usuarios->currentPage() == $usuarios->lastPage() ? 'disabled' : '' }}">
+                      <a class="page-link" href="{{ $usuarios->nextPageUrl() }}" aria-label="Siguiente">
+                          &raquo;
+                      </a>
+                  </li>
+              </ul>
+
           </div>
           @endif
+
+          {{-- =============================================== --}}
+          {{-- =========== FIN: SECCIÓN DE PAGINACIÓN ========== --}}
+          {{-- =============================================== --}}
+
         </div>
       </div>
     </div>
-
-    {{-- BOTÓN FLOTANTE --}}
-    @if(isset($usuarios) && count($usuarios) > 0)
-      <a href="{{ route('user.index', $usuarios[0]->Cedula) }}" class="floating-button">
-        <i class="bi bi-person-fill"></i> Gestionar Usuario
-      </a>
-    @endif
 
     {{-- PIE DE PÁGINA --}}
     <footer>

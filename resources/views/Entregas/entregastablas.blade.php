@@ -51,9 +51,9 @@
                 </li>
                 <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}" alt="Usuarios">
                         Usuarios</a></li>
-                <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/Elementos.png') }}"
+                <li><a href="{{ route('prestamos.index') }}"><img src="{{ asset('Imagenes/Elementos.png') }}"
                             alt="Insumos"> Insumos</a></li>
-                <li><a href="{{ route('entregas.index') }}"><img src="{{ asset('Imagenes/lista.png') }}"
+                <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/lista.png') }}"
                             alt="Entregas"> Entregas</a></li>
             </div>
 

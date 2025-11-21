@@ -7,6 +7,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntregasController;
 use App\Http\Controllers\EntregasTablasController;
+use App\Http\Controllers\EntregasEquipoController;
 use App\Http\Controllers\PrestamosController;
 
 
@@ -61,4 +62,15 @@ Route::get('/prestamos', [PrestamosController::class, 'index'])->name('prestamos
 Route::get('/prestamos/create', [PrestamosController::class, 'create'])->name('prestamos.create');
 Route::post('/prestamos', [PrestamosController::class, 'store'])->name('prestamos.store');
 
+// ==========================
+// ENTREGAS DE EQUIPOS
+// ==========================
+Route::get('/entregas-equipos', [EntregasEquipoController::class, 'index'])
+    ->name('entregasEquipos.index');
 
+Route::get('/entregas-equipos/create', [EntregasEquipoController::class, 'create'])
+    ->name('entregasEquipos.create');
+
+Route::post('/entregas-equipos', [EntregasEquipoController::class, 'store'])
+    ->name('entregasEquipos.store');
+Route::patch('/entregas-equipos/{id}/aprobar', [EntregasEquipoController::class, 'aprobar'])->name('entregasEquipos.aprobar');

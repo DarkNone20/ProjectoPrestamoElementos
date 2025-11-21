@@ -44,7 +44,7 @@
                 <li><a href="{{ route('home') }}"><img src="{{ asset('Imagenes/Home.png') }}"> Home</a></li>
                 <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}"> Usuarios</a>
                 </li>
-                <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/Elementos.png') }}">
+                <li><a href="{{ route('prestamos.index') }}"><img src="{{ asset('Imagenes/Elementos.png') }}">
                         Insumos</a></li>
                 <li><a href="{{ route('entregas.index') }}"><img src="{{ asset('Imagenes/lista.png') }}"> Entregas</a>
                 </li>

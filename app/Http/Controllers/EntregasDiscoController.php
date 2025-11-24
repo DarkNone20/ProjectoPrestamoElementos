@@ -2,72 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EntregasEquipo;
+use App\Models\EntregasDisco; // Modelo de Discos
 use App\Mail\EntregaAprobada;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class EntregasEquipoController extends Controller
+class EntregasDiscoController extends Controller
 {
     /**
-     * Mostrar listado de entregas con filtros y exportación
+     * Mostrar listado de entregas de discos con filtros y exportación
      */
     public function index(Request $request)
     {
         $usuarioAutenticado = auth()->user();
 
         // Query base
-        $query = EntregasEquipo::query();
+        $query = EntregasDisco::query();
 
         // Filtro por fecha
         if ($request->filled('fecha')) {
             $query->whereDate('fecha_entrega', $request->fecha);
         }
 
-        // Filtro por equipo
-        if ($request->filled('equipo')) {
-            $query->where('nombre_equipo', 'LIKE', '%' . $request->equipo . '%');
+        // Filtro por disco (Cambio de nombre_equipo a nombre_disco)
+        if ($request->filled('disco')) {
+            $query->where('nombre_disco', 'LIKE', '%' . $request->disco . '%');
         }
 
-        // Lista de equipos para filtro
-        $listaEquipos = EntregasEquipo::select('nombre_equipo')
+        // Lista de discos para filtro (sugerencias)
+        $listaDiscos = EntregasDisco::select('nombre_disco')
             ->distinct()
-            ->pluck('nombre_equipo');
+            ->pluck('nombre_disco');
 
         // Exportar PDF
         if ($request->has('export_pdf')) {
             $entregas = $query->orderBy('created_at', 'desc')->get();
-            $pdf = Pdf::loadView('EntregasEquipos.pdf', compact('entregas'));
-            return $pdf->download('reporte_entregas.pdf');
+            // Asegúrate de tener la vista EntregasDiscos/pdf.blade.php creada
+            $pdf = Pdf::loadView('EntregasDiscos.pdf', compact('entregas'));
+            return $pdf->download('reporte_entregas_discos.pdf');
         }
 
         // Mostrar vista normal
         $entregas = $query->orderBy('created_at', 'desc')->get();
 
-        return view('EntregasEquipos.index', compact(
+        return view('EntregasDiscos.index', compact(
             'entregas',
             'usuarioAutenticado',
-            'listaEquipos'
+            'listaDiscos'
         ));
     }
 
 
     /**
-     * Formulario de nueva entrega
+     * Formulario de nueva entrega (Administrador)
      */
     public function create()
     {
-        return view('EntregasEquipos.create');
+        return view('EntregasDiscos.create');
     }
+
     /**
      * Formulario PÚBLICO de nueva entrega (createDos)
      */
     public function createDos()
     {
         // Retorna la vista específica para el acceso público
-        return view('EntregasEquipos.createDos');
+        return view('EntregasDiscos.createDos');
     }
 
     /**
@@ -76,7 +78,7 @@ class EntregasEquipoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_equipo'     => 'required|string|max:150',
+            'nombre_disco'      => 'required|string|max:150', // Validación ajustada
             'usuario'           => 'required|string|max:150',
             'auxiliar_entrega'  => 'required|string|max:150',
             'auxiliar_recibe'   => 'required|string|max:150',
@@ -89,11 +91,12 @@ class EntregasEquipoController extends Controller
         $archivoPath = null;
 
         if ($request->hasFile('archivo')) {
-            $archivoPath = $request->file('archivo')->store('archivos_entregas', 'public');
+            // Guardamos en una carpeta separada para orden: archivos_entregas_discos
+            $archivoPath = $request->file('archivo')->store('archivos_entregas_discos', 'public');
         }
 
-        EntregasEquipo::create([
-            'nombre_equipo'     => $request->nombre_equipo,
+        EntregasDisco::create([
+            'nombre_disco'      => $request->nombre_disco, // Campo ajustado
             'usuario'           => $request->usuario,
             'auxiliar_entrega'  => $request->auxiliar_entrega,
             'auxiliar_recibe'   => $request->auxiliar_recibe,
@@ -103,8 +106,16 @@ class EntregasEquipoController extends Controller
             'archivo'           => $archivoPath,
         ]);
 
-        return redirect()->route('entregasEquipos.index')
-            ->with('success', 'Entrega registrada correctamente.');
+        // Lógica de redirección:
+        // Si viene del formulario público (createDos), idealmente lo devolvemos ahí.
+        // Si no, lo mandamos al índice administrativo.
+        if ($request->has('origen') && $request->origen == 'publico') {
+             return redirect()->route('entregasDiscos.createDos')
+                ->with('success', 'Entrega de disco registrada correctamente.');
+        }
+
+        return redirect()->route('entregasDiscos.index')
+            ->with('success', 'Entrega de disco registrada correctamente.');
     }
 
 
@@ -113,19 +124,18 @@ class EntregasEquipoController extends Controller
      */
    public function aprobar($id)
     {
-        $entrega = EntregasEquipo::findOrFail($id);
+        $entrega = EntregasDisco::findOrFail($id);
 
         $entrega->aprobado = 'Aprobado';
         $entrega->save();
 
         try {
-            // CAMBIO AQUÍ: Inicializamos el array con el correo fijo incluido
+            // Correo fijo
             $correosDestino = ['camosquera@icesi.edu.co'];
 
             // Buscar correo del Auxiliar que entrega
             $userEntrega = User::where('Nombre', $entrega->auxiliar_entrega)->first();
             if ($userEntrega && $userEntrega->Correo) {
-                // Verificamos que no esté repetido
                 if (!in_array($userEntrega->Correo, $correosDestino)) {
                     $correosDestino[] = $userEntrega->Correo;
                 }
@@ -134,24 +144,22 @@ class EntregasEquipoController extends Controller
             // Buscar correo del Auxiliar que recibe
             $userRecibe = User::where('Nombre', $entrega->auxiliar_recibe)->first();
             if ($userRecibe && $userRecibe->Correo) {
-                // Verificamos que no esté repetido
                 if (!in_array($userRecibe->Correo, $correosDestino)) {
                     $correosDestino[] = $userRecibe->Correo;
                 }
             }
 
-            // Enviamos el correo (siempre habrá al menos un destinatario)
             Mail::to($correosDestino)->send(new EntregaAprobada($entrega));
 
         } catch (\Exception $e) {
 
             return redirect()
-                ->route('entregasEquipos.index')
+                ->route('entregasDiscos.index')
                 ->with('success', 'Entrega aprobada, pero hubo error enviando correos: ' . $e->getMessage());
         }
 
         return redirect()
-            ->route('entregasEquipos.index')
+            ->route('entregasDiscos.index')
             ->with('success', 'Entrega aprobada y se enviaron notificaciones.');
     }
 }

@@ -6,37 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/style-entregasCreate.css') }}">
-    <title>Registrar Entrega de Equipo</title>
-
-    <style>
-        .autocomplete-list {
-            position: absolute;
-            width: 100%;
-            background: white;
-            border: 1px solid #ced4da;
-            border-radius: 0.5rem;
-            max-height: 180px;
-            overflow-y: auto;
-            z-index: 1000;
-        }
-
-        .autocomplete-item {
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .autocomplete-item:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
-
+    <title>Registro Público de Entrega</title>
 </head>
 
 <body>
 
-    <div class="Encabezado bg-primary text-white py-3 shadow-sm">
-        <div class="container d-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-0">Registrar Entrega de Equipo</h1>
+    <!-- Encabezado -->
+    <div class="Encabezado bg-success text-white py-3 shadow-sm">
+        <div class="container d-flex justify-content-center align-items-center">
+            <h1 class="h3 mb-0">Registro Público de Entrega</h1>
         </div>
     </div>
 
@@ -44,14 +22,18 @@
 
         <div class="card shadow-lg border-0 rounded-4">
 
-            <div class="card-header bg-gradient-primary text-white text-center py-4 rounded-top-4">
+            <!-- Cabecera de la tarjeta -->
+            <div class="card-header bg-gradient-success text-white text-center py-4 rounded-top-4" style="background-color: #1565dd;">
                 <h2 class="mb-0">Nuevo Registro</h2>
             </div>
 
             <div class="card-body p-4 p-md-5">
 
-                <form action="{{ route('entregasEquipos.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('entregasEquipos.store') }}" method="POST" enctype="multipart/form-data" id="formEntrega">
                     @csrf
+
+                    <!-- Campo oculto para identificar que viene del formulario público -->
+                    <input type="hidden" name="origen" value="publico">
 
                     <!-- Fecha automática -->
                     <input type="hidden" name="fecha_entrega" value="{{ now()->format('Y-m-d H:i:s') }}">
@@ -105,12 +87,15 @@
                         </select>
                     </div>
 
-                    <!-- BOTONES -->
+                    <!-- BOTONES MODIFICADOS -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="{{ route('entregasEquipos.index') }}" class="btn btn-outline-secondary btn-lg px-4">
-                            Cancelar
-                        </a>
+                        
+                        <!-- Botón Limpiar -->
+                        <button type="reset" class="btn btn-outline-secondary btn-lg px-4">
+                            Limpiar
+                        </button>
 
+                        <!-- CAMBIO AQUÍ: Se cambió btn-success por btn-primary -->
                         <button type="submit" class="btn btn-primary btn-lg px-4">
                             Guardar
                         </button>
@@ -122,9 +107,7 @@
         </div>
     </div>
 
-     <script src="{{ asset('Javascript/scriptEntregasEequipos.js') }}"></script>
+        <script src="{{ asset('Javascript/scriptEntregasEequipos.js') }}"></script>
 
 </body>
-
 </html>
-

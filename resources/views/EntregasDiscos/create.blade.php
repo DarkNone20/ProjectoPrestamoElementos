@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Reutilizamos el mismo CSS para mantener la consistencia visual -->
     <link rel="stylesheet" href="{{ asset('assets/style-entregasCreate.css') }}">
-    <title>Registrar Entrega de Equipo</title>
+    <title>Registrar Entrega de Disco</title>
 
     <style>
         .autocomplete-list {
@@ -34,9 +35,10 @@
 
 <body>
 
+    <!-- Encabezado -->
     <div class="Encabezado bg-primary text-white py-3 shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-0">Registrar Entrega de Equipo</h1>
+            <h1 class="h3 mb-0">Registrar Entrega de Disco</h1>
         </div>
     </div>
 
@@ -45,37 +47,37 @@
         <div class="card shadow-lg border-0 rounded-4">
 
             <div class="card-header bg-gradient-primary text-white text-center py-4 rounded-top-4">
-                <h2 class="mb-0">Nuevo Registro</h2>
+                <h2 class="mb-0">Nuevo Registro de Disco</h2>
             </div>
 
             <div class="card-body p-4 p-md-5">
 
-                <form action="{{ route('entregasEquipos.store') }}" method="POST" enctype="multipart/form-data">
+                
+                <form action="{{ route('entregasDiscos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <!-- Fecha automática -->
+                  
                     <input type="hidden" name="fecha_entrega" value="{{ now()->format('Y-m-d H:i:s') }}">
                     <input type="hidden" name="aprobado" value="Pendiente">
 
-                    <!-- NOMBRE DEL EQUIPO -->
+                   
                     <div class="mb-4">
-                        <label class="form-label fs-5 fw-semibold">Nombre del Equipo:</label>
-                        <input type="text" name="nombre_equipo" class="form-control form-control-lg" required>
+                        <label class="form-label fs-5 fw-semibold">Nombre del Equipo :</label>
+                        <input type="text" name="nombre_disco" class="form-control form-control-lg" required>
                     </div>
 
-                    <!-- USUARIO -->
+                 
                     <div class="mb-4">
                         <label class="form-label fs-5 fw-semibold">Usuario:</label>
                         <input type="text" name="usuario" class="form-control form-control-lg" required>
                     </div>
 
-                    <!-- ARCHIVO -->
+                    
                     <div class="mb-4">
                         <label class="form-label fs-5 fw-semibold">Archivo:</label>
                         <input type="file" name="archivo" class="form-control form-control-lg">
                     </div>
 
-                    <!-- AUXILIAR ENTREGA -->
                     <div class="mb-4 position-relative">
                         <label class="form-label fs-5 fw-semibold">Auxiliar que Entrega:</label>
 
@@ -85,7 +87,7 @@
                         <div id="listaEntrega" class="autocomplete-list d-none"></div>
                     </div>
 
-                    <!-- AUXILIAR RECIBE -->
+                   
                     <div class="mb-4 position-relative">
                         <label class="form-label fs-5 fw-semibold">Auxiliar que Recibe:</label>
 
@@ -96,7 +98,6 @@
                     </div>
 
 
-                    <!-- ESTADO -->
                     <div class="mb-4">
                         <label class="form-label fs-5 fw-semibold">Estado:</label>
                         <select name="estado" class="form-select form-select-lg" required>
@@ -105,9 +106,10 @@
                         </select>
                     </div>
 
-                    <!-- BOTONES -->
+            
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="{{ route('entregasEquipos.index') }}" class="btn btn-outline-secondary btn-lg px-4">
+                   
+                        <a href="{{ route('entregasDiscos.index') }}" class="btn btn-outline-secondary btn-lg px-4">
                             Cancelar
                         </a>
 
@@ -122,9 +124,9 @@
         </div>
     </div>
 
-     <script src="{{ asset('Javascript/scriptEntregasEequipos.js') }}"></script>
+    
+    <script src="{{ asset('Javascript/scriptEntregasEequipos.js') }}"></script>
 
 </body>
 
 </html>
-

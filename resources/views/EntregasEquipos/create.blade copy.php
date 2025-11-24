@@ -33,63 +33,104 @@
             <form action="{{ route('entregasEquipos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
+                <!-- NOMBRE DEL EQUIPO -->
                 <div class="mb-4">
                     <label class="form-label fs-5 fw-semibold">Nombre del Equipo:</label>
                     <input type="text" name="nombre_equipo"
                            class="form-control form-control-lg @error('nombre_equipo') is-invalid @enderror"
                            required>
+
+                    @error('nombre_equipo')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <!-- FECHA AUTOMÁTICA -->
                 <div class="mb-4">
                     <label class="form-label fs-5 fw-semibold">Fecha de Entrega:</label>
-                    <input type="datetime-local" name="fecha_entrega"
-                           class="form-control form-control-lg">
+                    <input type="date" name="fecha_entrega"
+                           class="form-control form-control-lg @error('fecha_entrega') is-invalid @enderror"
+                           value="{{ date('Y-m-d') }}" required>
+
+                    @error('fecha_entrega')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <!-- USUARIO -->
                 <div class="mb-4">
                     <label class="form-label fs-5 fw-semibold">Usuario:</label>
                     <input type="text" name="usuario"
-                           class="form-control form-control-lg"
+                           class="form-control form-control-lg @error('usuario') is-invalid @enderror"
                            required>
+
+                    @error('usuario')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <!-- ARCHIVO -->
                 <div class="mb-4">
                     <label class="form-label fs-5 fw-semibold">Archivo (opcional):</label>
                     <input type="file" name="archivo"
-                           class="form-control form-control-lg">
+                           class="form-control form-control-lg @error('archivo') is-invalid @enderror">
+
+                    @error('archivo')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <!-- AUXILIAR ENTREGA -->
                 <div class="mb-4">
                     <label class="form-label fs-5 fw-semibold">Auxiliar que Entrega:</label>
                     <input type="text" name="auxiliar_entrega"
-                           class="form-control form-control-lg"
+                           class="form-control form-control-lg @error('auxiliar_entrega') is-invalid @enderror"
                            required>
+
+                    @error('auxiliar_entrega')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <!-- AUXILIAR RECIBE -->
                 <div class="mb-4">
                     <label class="form-label fs-5 fw-semibold">Auxiliar que Recibe:</label>
                     <input type="text" name="auxiliar_recibe"
-                           class="form-control form-control-lg"
+                           class="form-control form-control-lg @error('auxiliar_recibe') is-invalid @enderror"
                            required>
+
+                    @error('auxiliar_recibe')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <!-- ESTADO -->
                 <div class="mb-4">
                     <label class="form-label fs-5 fw-semibold">Estado:</label>
-                    <select name="estado" class="form-select form-select-lg">
-                        <option value="Pendiente" selected>Pendiente</option>
-                        <option value="Entregado">Entregado</option>
-                        <option value="Devuelto">Devuelto</option>
+                    <select name="estado" class="form-select form-select-lg @error('estado') is-invalid @enderror" required>
+                        <option value="Libre">Libre</option>
+                        <option value="Remplazo">Remplazo</option>
                     </select>
+
+                    @error('estado')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <!-- APROBADO -->
                 <div class="mb-4">
                     <label class="form-label fs-5 fw-semibold">Aprobado:</label>
-                    <select name="aprobado" class="form-select form-select-lg">
-                        <option value="Pendiente" selected>Pendiente</option>
+                    <select name="aprobado" class="form-select form-select-lg @error('aprobado') is-invalid @enderror" required>
+                        <option value="Pendiente">Pendiente</option>
                         <option value="Aprobado">Aprobado</option>
                     </select>
+
+                    @error('aprobado')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <!-- BOTONES -->
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="{{ route('entregasEquipos.index') }}" class="btn btn-outline-secondary btn-lg px-4">
                         Cancelar

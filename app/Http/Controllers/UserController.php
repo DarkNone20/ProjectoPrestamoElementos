@@ -11,15 +11,10 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $elementosPorPagina = 5;
-
         $usuarios = User::paginate($elementosPorPagina);
-
         $usuarioAutenticado = auth()->user();
 
-        return view('Usuarios.user', compact(
-            'usuarios',
-            'usuarioAutenticado'
-        ));
+        return view('Usuarios.user', compact('usuarios', 'usuarioAutenticado'));
     }
 
     public function store(Request $request)
@@ -37,7 +32,7 @@ class UserController extends Controller
             'Cedula'   => $validatedData['Cedula'],
             'Nombre'   => $validatedData['Nombre'],
             'Alias'    => $validatedData['Alias'] ?? null,
-            'password' => Hash::make($validatedData['Password']), // CORREGIDO
+            'password' => Hash::make($validatedData['Password']),
             'Cargo'    => $validatedData['Cargo'] ?? null,
             'Correo'   => $validatedData['Correo'] ?? null,
         ]);
@@ -52,5 +47,18 @@ class UserController extends Controller
         $usuario->delete();
 
         return back()->with('success', 'Usuario eliminado correctamente');
+    }
+
+    // AGREGA ESTA FUNCIÓN AL FINAL DE TU CONTROLADOR
+    public function buscar(Request $request)
+    {
+        $term = $request->input('term');
+
+        // Buscamos coincidencias por Nombre
+        $usuarios = User::where('Nombre', 'LIKE', "%{$term}%")
+            ->limit(10)
+            ->get(['Cedula', 'Nombre']); // Traemos Cedula y Nombre
+
+        return response()->json($usuarios);
     }
 }

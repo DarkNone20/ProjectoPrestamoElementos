@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EntregasEquipo extends Model
+class EntregasDisco extends Model
 {
     use HasFactory;
 
-
-    protected $table = 'entregas_equipos';
+    // Definimos la tabla explícitamente para evitar errores de pluralización automática
+    protected $table = 'entregas_discos';
 
     protected $fillable = [
-        'nombre_equipo',
+        'nombre_disco',    // Cambiado de nombre_equipo a nombre_disco
         'fecha_entrega',
         'usuario',
         'archivo', 
@@ -22,7 +22,6 @@ class EntregasEquipo extends Model
         'estado',
         'aprobado',
     ];
-
 
     public $timestamps = true;
 }

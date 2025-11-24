@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EntregasDisco; // Modelo de Discos
-use App\Mail\EntregaAprobada;
+use App\Models\EntregasDisco;
+use App\Mail\EntregaDiscoAprobada; // <--- USAMOS LA NUEVA CLASE
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,40 +11,29 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class EntregasDiscoController extends Controller
 {
-    /**
-     * Mostrar listado de entregas de discos con filtros y exportación
-     */
     public function index(Request $request)
     {
         $usuarioAutenticado = auth()->user();
-
-        // Query base
         $query = EntregasDisco::query();
 
-        // Filtro por fecha
         if ($request->filled('fecha')) {
             $query->whereDate('fecha_entrega', $request->fecha);
         }
 
-        // Filtro por disco (Cambio de nombre_equipo a nombre_disco)
         if ($request->filled('disco')) {
             $query->where('nombre_disco', 'LIKE', '%' . $request->disco . '%');
         }
 
-        // Lista de discos para filtro (sugerencias)
         $listaDiscos = EntregasDisco::select('nombre_disco')
             ->distinct()
             ->pluck('nombre_disco');
 
-        // Exportar PDF
         if ($request->has('export_pdf')) {
             $entregas = $query->orderBy('created_at', 'desc')->get();
-            // Asegúrate de tener la vista EntregasDiscos/pdf.blade.php creada
             $pdf = Pdf::loadView('EntregasDiscos.pdf', compact('entregas'));
             return $pdf->download('reporte_entregas_discos.pdf');
         }
 
-        // Mostrar vista normal
         $entregas = $query->orderBy('created_at', 'desc')->get();
 
         return view('EntregasDiscos.index', compact(
@@ -54,31 +43,20 @@ class EntregasDiscoController extends Controller
         ));
     }
 
-
-    /**
-     * Formulario de nueva entrega (Administrador)
-     */
     public function create()
     {
         return view('EntregasDiscos.create');
     }
 
-    /**
-     * Formulario PÚBLICO de nueva entrega (createDos)
-     */
     public function createDos()
     {
-        // Retorna la vista específica para el acceso público
         return view('EntregasDiscos.createDos');
     }
 
-    /**
-     * Guardar nueva entrega
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_disco'      => 'required|string|max:150', // Validación ajustada
+            'nombre_disco'      => 'required|string|max:150',
             'usuario'           => 'required|string|max:150',
             'auxiliar_entrega'  => 'required|string|max:150',
             'auxiliar_recibe'   => 'required|string|max:150',
@@ -89,14 +67,12 @@ class EntregasDiscoController extends Controller
         ]);
 
         $archivoPath = null;
-
         if ($request->hasFile('archivo')) {
-            // Guardamos en una carpeta separada para orden: archivos_entregas_discos
             $archivoPath = $request->file('archivo')->store('archivos_entregas_discos', 'public');
         }
 
         EntregasDisco::create([
-            'nombre_disco'      => $request->nombre_disco, // Campo ajustado
+            'nombre_disco'      => $request->nombre_disco,
             'usuario'           => $request->usuario,
             'auxiliar_entrega'  => $request->auxiliar_entrega,
             'auxiliar_recibe'   => $request->auxiliar_recibe,
@@ -106,9 +82,6 @@ class EntregasDiscoController extends Controller
             'archivo'           => $archivoPath,
         ]);
 
-        // Lógica de redirección:
-        // Si viene del formulario público (createDos), idealmente lo devolvemos ahí.
-        // Si no, lo mandamos al índice administrativo.
         if ($request->has('origen') && $request->origen == 'publico') {
              return redirect()->route('entregasDiscos.createDos')
                 ->with('success', 'Entrega de disco registrada correctamente.');
@@ -118,11 +91,7 @@ class EntregasDiscoController extends Controller
             ->with('success', 'Entrega de disco registrada correctamente.');
     }
 
-
-    /**
-     * Aprobar entrega + enviar correos
-     */
-   public function aprobar($id)
+    public function aprobar($id)
     {
         $entrega = EntregasDisco::findOrFail($id);
 
@@ -130,10 +99,8 @@ class EntregasDiscoController extends Controller
         $entrega->save();
 
         try {
-            // Correo fijo
             $correosDestino = ['camosquera@icesi.edu.co'];
 
-            // Buscar correo del Auxiliar que entrega
             $userEntrega = User::where('Nombre', $entrega->auxiliar_entrega)->first();
             if ($userEntrega && $userEntrega->Correo) {
                 if (!in_array($userEntrega->Correo, $correosDestino)) {
@@ -141,7 +108,6 @@ class EntregasDiscoController extends Controller
                 }
             }
 
-            // Buscar correo del Auxiliar que recibe
             $userRecibe = User::where('Nombre', $entrega->auxiliar_recibe)->first();
             if ($userRecibe && $userRecibe->Correo) {
                 if (!in_array($userRecibe->Correo, $correosDestino)) {
@@ -149,10 +115,10 @@ class EntregasDiscoController extends Controller
                 }
             }
 
-            Mail::to($correosDestino)->send(new EntregaAprobada($entrega));
+            // AQUI ESTÁ EL CAMBIO IMPORTANTE: Enviamos el nuevo correo de Discos
+            Mail::to($correosDestino)->send(new EntregaDiscoAprobada($entrega));
 
         } catch (\Exception $e) {
-
             return redirect()
                 ->route('entregasDiscos.index')
                 ->with('success', 'Entrega aprobada, pero hubo error enviando correos: ' . $e->getMessage());

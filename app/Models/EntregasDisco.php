@@ -13,7 +13,7 @@ class EntregasDisco extends Model
     protected $table = 'entregas_discos';
 
     protected $fillable = [
-        'nombre_disco',    // Cambiado de nombre_equipo a nombre_disco
+        'nombre_disco',    
         'fecha_entrega',
         'usuario',
         'archivo', 

@@ -41,7 +41,7 @@
 
                     <!-- NOMBRE DEL EQUIPO -->
                     <div class="mb-4">
-                        <label class="form-label fs-5 fw-semibold">Nombre del Equipo:</label>
+                        <label class="form-label fs-5 fw-semibold">Nombre del Equipo - Activo:</label>
                         <input type="text" name="nombre_equipo" class="form-control form-control-lg" required>
                     </div>
 

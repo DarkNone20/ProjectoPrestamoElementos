@@ -19,7 +19,7 @@
     <div class="Encabezado bg-primary text-white py-3 shadow-sm">
         <div class="container d-flex justify-content-center align-items-center position-relative">
             <div class="Titulo">
-                <h1 class="h3 mb-0">Listado de Entregas</h1>
+                <h1 class="h3 mb-0">Listado de Entregas de Equipos</h1>
             </div>
             <div class="Alias">
                 <a href="#">

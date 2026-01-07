@@ -44,14 +44,14 @@
         <tbody>
             @foreach ($entregas as $e)
                 <tr>
-                    <td>{{ $e->nombre_equipo }}</td>
+                    <td>{{ $e->nombre_disco}}</td>
                     <td>{{ $e->usuario }}</td>
                     <td>{{ $e->auxiliar_entrega }}</td>
                     <td>{{ $e->auxiliar_recibe }}</td>
                     <td>
-                        @if($e->estado == 'Pendiente')
+                        @if($e->estado == 'Libre')
                             <span class="badge bg-warning">Libre</span>
-                        @elseif($e->estado == 'Entregado')
+                        @elseif($e->estado == 'Remplazo')
                             <span class="badge bg-success">Remplazo</span>
                 
                         @endif

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <title>Gestión de Usuarios</title>
 </head>
+
 <body>
 
   {{-- BOTÓN HAMBURGUESA --}}
@@ -23,14 +25,21 @@
       </li>
       <div class="Menu">
         <li><a href="{{ route('home') }}"><img src="{{ asset('Imagenes/Home.png') }}" alt="Inicio"> Home</a></li>
-        <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}" alt="Usuarios"> Usuarios</a></li>
-        <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/Elementos.png') }}" alt="Insumos"> Insumos</a></li>
-        <li><a href="{{ route('entregas.index') }}"><img src="{{ asset('Imagenes/lista.png') }}" alt="Entregas"> Entregas</a></li>
+        <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}" alt="Usuarios">
+            Usuarios</a></li>
+        <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/Elementos.png') }}" alt="Insumos">
+            Insumos</a></li>
+        <li><a href="{{ route('entregas.index') }}"><img src="{{ asset('Imagenes/lista.png') }}" alt="Entregas">
+            Entregas</a></li>
+        <li><a href="{{ route('entregasDiscos.index') }}"><img src="{{ asset('Imagenes/Discos.png') }}" alt="Discos">
+            Discos</a></li>
+        <li><a href="{{ route('entregasEquipos.index') }}"><img src="{{ asset('Imagenes/Pc.png') }}" alt="Portatiles">
+            Portatiles</a></li>
       </div>
       <div class="Prueba">
         <li>
           <a href="{{ route('logout') }}"
-             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <img src="{{ asset('Imagenes/salir.png') }}" alt="Salir"> Logout
           </a>
         </li>
@@ -43,7 +52,7 @@
 
   {{-- CONTENIDO PRINCIPAL CON WRAPPER --}}
   <div id="main-content-wrapper">
-    
+
     {{-- ENCABEZADO --}}
     <div class="Encabezado">
       <div class="Logo"></div>
@@ -93,7 +102,9 @@
                     <span class="label-text">Cédula</span>
                     <span class="required">*</span>
                   </label>
-                  <input type="text" id="Cedula" name="Cedula" class="form-control form-input @error('Cedula') is-invalid @enderror" required placeholder="Ej: 123456789">
+                  <input type="text" id="Cedula" name="Cedula"
+                    class="form-control form-input @error('Cedula') is-invalid @enderror" required
+                    placeholder="Ej: 123456789">
                   @error('Cedula')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
@@ -104,7 +115,9 @@
                     <span class="label-text">Nombre</span>
                     <span class="required">*</span>
                   </label>
-                  <input type="text" id="Nombre" name="Nombre" class="form-control form-input @error('Nombre') is-invalid @enderror" required placeholder="Nombre completo">
+                  <input type="text" id="Nombre" name="Nombre"
+                    class="form-control form-input @error('Nombre') is-invalid @enderror" required
+                    placeholder="Nombre completo">
                   @error('Nombre')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
@@ -114,7 +127,9 @@
                   <label class="form-label" for="Alias">
                     <span class="label-text">Alias</span>
                   </label>
-                  <input type="text" id="Alias" name="Alias" class="form-control form-input @error('Alias') is-invalid @enderror" placeholder="Nombre de usuario (opcional)">
+                  <input type="text" id="Alias" name="Alias"
+                    class="form-control form-input @error('Alias') is-invalid @enderror"
+                    placeholder="Nombre de usuario (opcional)">
                   @error('Alias')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
@@ -125,7 +140,9 @@
                     <span class="label-text">Contraseña</span>
                     <span class="required">*</span>
                   </label>
-                  <input type="password" id="Password" name="Password" class="form-control form-input @error('Password') is-invalid @enderror" required placeholder="Mínimo 8 caracteres">
+                  <input type="password" id="Password" name="Password"
+                    class="form-control form-input @error('Password') is-invalid @enderror" required
+                    placeholder="Mínimo 8 caracteres">
                   @error('Password')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
@@ -135,7 +152,9 @@
                   <label class="form-label" for="Cargo">
                     <span class="label-text">Cargo</span>
                   </label>
-                  <input type="text" id="Cargo" name="Cargo" class="form-control form-input @error('Cargo') is-invalid @enderror" placeholder="Ej: Administrador (opcional)">
+                  <input type="text" id="Cargo" name="Cargo"
+                    class="form-control form-input @error('Cargo') is-invalid @enderror"
+                    placeholder="Ej: Administrador (opcional)">
                   @error('Cargo')
                     <small class="form-error">{{ $message }}</small>
                   @enderror
@@ -172,28 +191,28 @@
               </thead>
               <tbody>
                 @forelse ($usuarios as $u)
-                <tr>
-                  <td>{{ $u->Cedula }}</td>
-                  <td>{{ $u->Nombre }}</td>
-                  <td>{{ $u->Alias }}</td>
-                  <td>{{ $u->Cargo }}</td>
-                  <td>
-                    <div class="d-flex justify-content-center gap-2">
-                      <form action="{{ route('usuarios.destroy', $u->Cedula) }}" method="POST"
-                            onsubmit="return confirm('¿Seguro que deseas eliminar este usuario?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm">
-                          <i class="bi bi-trash"></i> Eliminar
-                        </button>
-                      </form>
-                    </div>
-                  </td>
-                </tr>
+                  <tr>
+                    <td>{{ $u->Cedula }}</td>
+                    <td>{{ $u->Nombre }}</td>
+                    <td>{{ $u->Alias }}</td>
+                    <td>{{ $u->Cargo }}</td>
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <form action="{{ route('usuarios.destroy', $u->Cedula) }}" method="POST"
+                          onsubmit="return confirm('¿Seguro que deseas eliminar este usuario?')">
+                          @csrf
+                          @method('DELETE')
+                          <button class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Eliminar
+                          </button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
                 @empty
-                <tr>
-                  <td colspan="5" class="text-muted">No hay usuarios registrados</td>
-                </tr>
+                  <tr>
+                    <td colspan="5" class="text-muted">No hay usuarios registrados</td>
+                  </tr>
                 @endforelse
               </tbody>
             </table>
@@ -201,37 +220,37 @@
 
           {{-- PAGINACIÓN --}}
           @if ($usuarios->hasPages())
-          <div class="card-footer pagination-footer d-flex justify-content-between align-items-center">
-            <div class="pagination-info text-muted">
-              Mostrando
-              <span class="fw-bold">{{ $usuarios->firstItem() }}</span>
-              a
-              <span class="fw-bold">{{ $usuarios->lastItem() }}</span>
-              de
-              <span class="fw-bold">{{ $usuarios->total() }}</span>
-              resultados
-            </div>
+            <div class="card-footer pagination-footer d-flex justify-content-between align-items-center">
+              <div class="pagination-info text-muted">
+                Mostrando
+                <span class="fw-bold">{{ $usuarios->firstItem() }}</span>
+                a
+                <span class="fw-bold">{{ $usuarios->lastItem() }}</span>
+                de
+                <span class="fw-bold">{{ $usuarios->total() }}</span>
+                resultados
+              </div>
 
-            <ul class="pagination mb-0">
-              <li class="page-item {{ $usuarios->onFirstPage() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $usuarios->previousPageUrl() }}" aria-label="Anterior">
-                  &laquo;
-                </a>
-              </li>
-
-              @foreach ($usuarios->getUrlRange(1, $usuarios->lastPage()) as $page => $url)
-                <li class="page-item {{ $usuarios->currentPage() == $page ? 'active' : '' }}">
-                  <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+              <ul class="pagination mb-0">
+                <li class="page-item {{ $usuarios->onFirstPage() ? 'disabled' : '' }}">
+                  <a class="page-link" href="{{ $usuarios->previousPageUrl() }}" aria-label="Anterior">
+                    &laquo;
+                  </a>
                 </li>
-              @endforeach
 
-              <li class="page-item {{ $usuarios->currentPage() == $usuarios->lastPage() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $usuarios->nextPageUrl() }}" aria-label="Siguiente">
-                  &raquo;
-                </a>
-              </li>
-            </ul>
-          </div>
+                @foreach ($usuarios->getUrlRange(1, $usuarios->lastPage()) as $page => $url)
+                  <li class="page-item {{ $usuarios->currentPage() == $page ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                  </li>
+                @endforeach
+
+                <li class="page-item {{ $usuarios->currentPage() == $usuarios->lastPage() ? 'disabled' : '' }}">
+                  <a class="page-link" href="{{ $usuarios->nextPageUrl() }}" aria-label="Siguiente">
+                    &raquo;
+                  </a>
+                </li>
+              </ul>
+            </div>
           @endif
         </div>
       </div>
@@ -254,4 +273,5 @@
   {{-- JS --}}
   <script src="{{ asset('Javascript/scriptHome.js') }}"></script>
 </body>
+
 </html>

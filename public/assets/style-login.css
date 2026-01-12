@@ -1,155 +1,185 @@
+/* 1. RESET Y CONFIGURACIÓN BASE */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to right, #509af0, #0f5fb9, #6006b4);
+    background: linear-gradient(135deg, #4da0f1, #0d5db6, #5905aa);
+    padding: 20px;
 }
 
+/* 2. TARJETA PRINCIPAL (Diseño Rectangular Proporcional) */
 .Group {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* 1.4fr para el formulario y 1fr para la mascota crea el efecto rectangular */
+    grid-template-columns: 1.4fr 1fr; 
     gap: 40px;
-    width: 70vw;
-    height: 70vh;
-    border-radius: 25px;
+    width: 95%;
+    max-width: 1150px; /* Ancho máximo para pantallas grandes */
+    height: auto;
+    min-height: 520px; 
     background-color: #ffffff;
-    box-shadow: 0 0 20px rgba(14, 13, 13, 0.589), 0 5px 5px rgba(3, 3, 3, 0.1);
+    border-radius: 40px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    /* Padding proporcional: mínimo 30px, ideal 4vw, máximo 60px */
+    padding: clamp(30px, 5vw, 70px); 
+    align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
+/* 3. COLUMNA IZQUIERDA: FORMULARIO */
 .Group-Uno {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    height: 100%;
-    width: 100%;
 }
 
+.logo {
+    width: 100%;
+    max-width: clamp(200px, 22vw, 280px); /* El logo escala con la pantalla */
+    height: auto;
+    margin-bottom: clamp(20px, 4vw, 45px);
+}
+
+label {
+    display: block;
+    color: #1a0b8c;
+    font-size: clamp(1rem, 1.2vw, 1.3rem);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* 4. CONTENEDOR DE INPUT E ICONO (Centrado Perfecto) */
+.input-icon {
+    position: relative; 
+    width: 100%;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-icon input {
+    width: 100%;
+    /* Altura proporcional */
+    height: clamp(50px, 4vw, 65px); 
+    padding: 0 20px 0 55px; /* Espacio de 55px para el icono */
+    font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+    background-color: #ecf1f4;
+    border: none;
+    border-radius: 18px;
+    outline: none;
+    color: #333;
+    transition: background 0.3s;
+}
+
+.input-icon input:focus {
+    background-color: #e2e8ec;
+}
+
+/* FIX: Centrado del icono respecto al INPUT (ignorando el label) */
+.input-icon img {
+    position: absolute;
+    left: 18px;
+    /* Calculamos la posición: 
+       La etiqueta mide aprox 1.5rem + 10px de margen. 
+       Fijamos el icono desde el fondo del contenedor para que siempre esté centrado en el input gris. */
+    bottom: clamp(13px, 1.2vw, 20px); 
+    width: clamp(20px, 1.8vw, 24px);
+    height: auto;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* 5. BOTÓN DE INICIO */
+button {
+    width: 100%;
+    height: clamp(55px, 4.5vw, 75px);
+    background-color: #00008b;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: clamp(1.1rem, 1.4vw, 1.5rem);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #000060;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 139, 0.3);
+}
+
+/* 6. COLUMNA DERECHA: MASCOTA */
 .Group-Dos {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 .Group-Dos img {
-    height: 660px;
-    width: 400px;
-    border-radius: 25px;
-}
-
-.logo {
-    width: 440px;
+    max-width: 100%;
     height: auto;
-    margin-bottom: 20px;
+    max-height: 480px; /* Evita que la mascota agrande la tarjeta hacia arriba */
+    object-fit: contain;
 }
 
-.input-icon {
-    position: relative;
-    width: 100%;
-    margin-bottom: 30px;
-    margin-top: 15px;
-}
+/* 7. ADAPTACIÓN PARA DIFERENTES PANTALLAS (RESPONSIVE) */
 
-.input-icon input {
-    outline: 0;
-    background-color: rgb(234, 239, 241);
-    box-shadow: 0 0 20px rgba(14, 13, 13, 0.1), 0 5px 5px rgba(3, 3, 3, 0.1);
-    border-radius: 15px;
-    border: 0;
-    width: 100%;
-    padding: 12px 12px 12px 45px;
-    font-size: 18px;
-}
-
-.input-icon img {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    width: 22px;
-    height: 22px;
-    pointer-events: none;
-    opacity: 0.7;
-}
-
-.input-icon input:hover {
-    transform: scale(1.02);
-}
-
-label {
-    color: rgb(24, 7, 121);
-    font-size: 25px;
-    margin-top: 6px;
-    margin-bottom: 10px;
-}
-
-button {
-    width: 100%;
-    height: 60px;
-    background-color: rgb(5, 5, 138);
-    border: 0;
-    color: white;
-    font-size: 18px;
-    border-radius: 25px;
-    cursor: pointer;
-    margin-top: 4px;
-    transition: 0.3s;
-}
-
-button:hover {
-    background-color: rgb(3, 18, 82);
-}
-
-@media (max-width: 1024px) {
+/* Tablets y Laptops Pequeñas */
+@media (max-width: 1100px) {
     .Group {
-        width: 90vw;
-        height: auto;
-        grid-template-columns: 1fr;
-        padding: 20px;
-    }
-    .Group-Dos img {
-        width: 300px;
-        height: auto;
-        margin-top: 20px;
-    }
-    .logo {
-        width: 300px;
+        max-width: 950px;
+        gap: 30px;
+        padding: 40px;
     }
 }
 
-@media (max-width: 768px) {
-    body {
-        align-items: flex-start;
-        padding: 20px;
-    }
+/* Móviles (Cambio a diseño vertical) */
+@media (max-width: 850px) {
     .Group {
-        width: 100%;
-        height: auto;
-        grid-template-columns: 1fr;
-        gap: 20px;
+        grid-template-columns: 1fr; /* Una sola columna para que no se vea apretado */
+        max-width: 500px;
+        padding: 40px 30px;
+        text-align: left;
     }
+
+    .Group-Uno {
+        order: 2; /* Formulario abajo */
+    }
+
+    .Group-Dos {
+        order: 1; /* Mascota arriba */
+        margin-bottom: 20px;
+    }
+
     .Group-Dos img {
-        width: 200px;
-        height: auto;
+        max-height: 220px;
     }
+
     .logo {
-        width: 220px;
+        margin: 0 auto 30px auto; /* Centrar logo en móviles */
     }
-    input {
-        font-size: 16px;
-        padding: 10px 10px 10px 40px;
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 480px) {
+    .Group {
+        border-radius: 30px;
+        padding: 30px 20px;
     }
-    button {
+    
+    .input-icon input {
         height: 50px;
-        font-size: 16px;
     }
 }

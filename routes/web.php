@@ -90,6 +90,10 @@ Route::patch('/entregas-equipos/{id}/aprobar', [EntregasEquipoController::class,
     ->name('entregasEquipos.aprobar');
 Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('usuarios.buscar');
 
+Route::get('/entregas-equipos/{id}/edit', [EntregasEquipoController::class, 'edit'])->name('entregasEquipos.edit');
+Route::put('/entregas-equipos/{id}', [EntregasEquipoController::class, 'update'])->name('entregasEquipos.update');
+Route::delete('/entregas-equipos/{id}', [EntregasEquipoController::class, 'destroy'])->name('entregasEquipos.destroy');
+
 
 // ==========================
 // ENTREGAS DE DISCOS
@@ -112,3 +116,7 @@ Route::post('/entregas-discos', [EntregasDiscoController::class, 'store'])
 
 Route::patch('/entregas-discos/{id}/aprobar', [EntregasDiscoController::class, 'aprobar'])
     ->name('entregasDiscos.aprobar');
+    
+Route::get('/entregas-discos/{id}/edit', [EntregasDiscoController::class, 'edit'])->name('entregasDiscos.edit');
+Route::put('/entregas-discos/{id}', [EntregasDiscoController::class, 'update'])->name('entregasDiscos.update');
+Route::delete('/entregas-discos/{id}', [EntregasDiscoController::class, 'destroy'])->name('entregasDiscos.destroy');

@@ -7,72 +7,50 @@ use App\Mail\EntregaAprobada;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage; // Para manejar archivos
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class EntregasEquipoController extends Controller
 {
     /**
-     * Mostrar listado de entregas con filtros y exportación
+     * Listado con filtros y exportación
      */
     public function index(Request $request)
     {
         $usuarioAutenticado = auth()->user();
-
-        // Query base
         $query = EntregasEquipo::query();
 
-        // Filtro por fecha
+        // Filtros
         if ($request->filled('fecha')) {
             $query->whereDate('fecha_entrega', $request->fecha);
         }
-
-        // Filtro por equipo
         if ($request->filled('equipo')) {
             $query->where('nombre_equipo', 'LIKE', '%' . $request->equipo . '%');
         }
-
-        // Lista de equipos para filtro
-        $listaEquipos = EntregasEquipo::select('nombre_equipo')
-            ->distinct()
-            ->pluck('nombre_equipo');
 
         // Exportar PDF
         if ($request->has('export_pdf')) {
             $entregas = $query->orderBy('created_at', 'desc')->get();
             $pdf = Pdf::loadView('EntregasEquipos.pdf', compact('entregas'));
-            return $pdf->download('reporte_entregas.pdf');
+            return $pdf->download('reporte_entregas_equipos.pdf');
         }
 
-        // Mostrar vista normal
         $entregas = $query->orderBy('created_at', 'desc')->get();
+        $listaEquipos = EntregasEquipo::select('nombre_equipo')->distinct()->pluck('nombre_equipo');
 
-        return view('EntregasEquipos.index', compact(
-            'entregas',
-            'usuarioAutenticado',
-            'listaEquipos'
-        ));
+        return view('EntregasEquipos.index', compact('entregas', 'usuarioAutenticado', 'listaEquipos'));
     }
 
-
-    /**
-     * Formulario de nueva entrega
-     */
     public function create()
     {
         return view('EntregasEquipos.create');
     }
-    /**
-     * Formulario PÚBLICO de nueva entrega (createDos)
-     */
+
     public function createDos()
     {
-        // Retorna la vista específica para el acceso público
         return view('EntregasEquipos.createDos');
     }
 
-    /**
-     * Guardar nueva entrega
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -87,7 +65,6 @@ class EntregasEquipoController extends Controller
         ]);
 
         $archivoPath = null;
-
         if ($request->hasFile('archivo')) {
             $archivoPath = $request->file('archivo')->store('archivos_entregas', 'public');
         }
@@ -103,55 +80,81 @@ class EntregasEquipoController extends Controller
             'archivo'           => $archivoPath,
         ]);
 
-        return redirect()->route('entregasEquipos.index')
-            ->with('success', 'Entrega registrada correctamente.');
+        return redirect()->route('entregasEquipos.index')->with('success', 'Entrega registrada correctamente.');
     }
 
+    // --- MÉTODOS PARA EDITAR ---
 
-    /**
-     * Aprobar entrega + enviar correos
-     */
-   public function aprobar($id)
+    public function edit($id)
+    {
+        $entrega = EntregasEquipo::findOrFail($id);
+        return view('EntregasEquipos.edit', compact('entrega'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nombre_equipo'     => 'required|string|max:150',
+            'usuario'           => 'required|string|max:150',
+            'auxiliar_entrega'  => 'required|string|max:150',
+            'auxiliar_recibe'   => 'required|string|max:150',
+            'estado'            => 'required|in:Remplazo,Libre',
+            'archivo'           => 'nullable|file|max:5000'
+        ]);
+
+        $entrega = EntregasEquipo::findOrFail($id);
+        $data = $request->except(['archivo']);
+
+        if ($request->hasFile('archivo')) {
+            // Eliminar archivo viejo si existe
+            if ($entrega->archivo) {
+                Storage::disk('public')->delete($entrega->archivo);
+            }
+            $data['archivo'] = $request->file('archivo')->store('archivos_entregas', 'public');
+        }
+
+        $entrega->update($data);
+
+        return redirect()->route('entregasEquipos.index')->with('success', 'Registro actualizado correctamente.');
+    }
+
+    // --- MÉTODO PARA ELIMINAR ---
+
+    public function destroy($id)
     {
         $entrega = EntregasEquipo::findOrFail($id);
 
+        // Eliminar el archivo físico del disco
+        if ($entrega->archivo) {
+            Storage::disk('public')->delete($entrega->archivo);
+        }
+
+        $entrega->delete();
+
+        return redirect()->route('entregasEquipos.index')->with('success', 'La entrega ha sido eliminada correctamente.');
+    }
+
+    public function aprobar($id)
+    {
+        $entrega = EntregasEquipo::findOrFail($id);
         $entrega->aprobado = 'Aprobado';
         $entrega->save();
 
         try {
-            // CAMBIO AQUÍ: Inicializamos el array con el correo fijo incluido
             $correosDestino = ['camosquera@icesi.edu.co'];
-
-            // Buscar correo del Auxiliar que entrega
             $userEntrega = User::where('Nombre', $entrega->auxiliar_entrega)->first();
             if ($userEntrega && $userEntrega->Correo) {
-                // Verificamos que no esté repetido
-                if (!in_array($userEntrega->Correo, $correosDestino)) {
-                    $correosDestino[] = $userEntrega->Correo;
-                }
+                if (!in_array($userEntrega->Correo, $correosDestino)) $correosDestino[] = $userEntrega->Correo;
             }
-
-            // Buscar correo del Auxiliar que recibe
             $userRecibe = User::where('Nombre', $entrega->auxiliar_recibe)->first();
             if ($userRecibe && $userRecibe->Correo) {
-                // Verificamos que no esté repetido
-                if (!in_array($userRecibe->Correo, $correosDestino)) {
-                    $correosDestino[] = $userRecibe->Correo;
-                }
+                if (!in_array($userRecibe->Correo, $correosDestino)) $correosDestino[] = $userRecibe->Correo;
             }
-
-            // Enviamos el correo (siempre habrá al menos un destinatario)
             Mail::to($correosDestino)->send(new EntregaAprobada($entrega));
-
         } catch (\Exception $e) {
-
-            return redirect()
-                ->route('entregasEquipos.index')
-                ->with('success', 'Entrega aprobada, pero hubo error enviando correos: ' . $e->getMessage());
+            return redirect()->route('entregasEquipos.index')->with('success', 'Aprobada, pero hubo error en correos.');
         }
 
-        return redirect()
-            ->route('entregasEquipos.index')
-            ->with('success', 'Entrega aprobada y se enviaron notificaciones.');
+        return redirect()->route('entregasEquipos.index')->with('success', 'Entrega aprobada y notificada.');
     }
 }

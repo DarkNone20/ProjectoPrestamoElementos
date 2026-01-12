@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\EntregasDisco;
-use App\Mail\EntregaDiscoAprobada; // <--- USAMOS LA NUEVA CLASE
+use App\Mail\EntregaDiscoAprobada;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage; // Importante para manejar archivos
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class EntregasDiscoController extends Controller
@@ -48,11 +49,6 @@ class EntregasDiscoController extends Controller
         return view('EntregasDiscos.create');
     }
 
-    public function createDos()
-    {
-        return view('EntregasDiscos.createDos');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -82,50 +78,86 @@ class EntregasDiscoController extends Controller
             'archivo'           => $archivoPath,
         ]);
 
-        if ($request->has('origen') && $request->origen == 'publico') {
-             return redirect()->route('entregasDiscos.createDos')
-                ->with('success', 'Entrega de disco registrada correctamente.');
-        }
-
         return redirect()->route('entregasDiscos.index')
             ->with('success', 'Entrega de disco registrada correctamente.');
+    }
+
+    // --- NUEVO MÉTODO EDITAR ---
+    public function edit($id)
+    {
+        $entrega = EntregasDisco::findOrFail($id);
+        return view('EntregasDiscos.edit', compact('entrega'));
+    }
+
+    // --- NUEVO MÉTODO UPDATE ---
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nombre_disco'      => 'required|string|max:150',
+            'usuario'           => 'required|string|max:150',
+            'auxiliar_entrega'  => 'required|string|max:150',
+            'auxiliar_recibe'   => 'required|string|max:150',
+            'estado'            => 'required|in:Remplazo,Libre',
+            'archivo'           => 'nullable|file|max:5000'
+        ]);
+
+        $entrega = EntregasDisco::findOrFail($id);
+        $data = $request->except(['archivo']);
+
+        if ($request->hasFile('archivo')) {
+            // Eliminar archivo anterior si existe
+            if ($entrega->archivo) {
+                Storage::disk('public')->delete($entrega->archivo);
+            }
+            $data['archivo'] = $request->file('archivo')->store('archivos_entregas_discos', 'public');
+        }
+
+        $entrega->update($data);
+
+        return redirect()->route('entregasDiscos.index')
+            ->with('success', 'Registro actualizado correctamente.');
+    }
+
+    // --- NUEVO MÉTODO ELIMINAR ---
+    public function destroy($id)
+    {
+        $entrega = EntregasDisco::findOrFail($id);
+        
+        // Eliminar archivo físico
+        if ($entrega->archivo) {
+            Storage::disk('public')->delete($entrega->archivo);
+        }
+
+        $entrega->delete();
+
+        return redirect()->route('entregasDiscos.index')
+            ->with('success', 'La entrega ha sido eliminada correctamente.');
     }
 
     public function aprobar($id)
     {
         $entrega = EntregasDisco::findOrFail($id);
-
         $entrega->aprobado = 'Aprobado';
         $entrega->save();
 
         try {
             $correosDestino = ['camosquera@icesi.edu.co'];
-
             $userEntrega = User::where('Nombre', $entrega->auxiliar_entrega)->first();
             if ($userEntrega && $userEntrega->Correo) {
-                if (!in_array($userEntrega->Correo, $correosDestino)) {
-                    $correosDestino[] = $userEntrega->Correo;
-                }
+                if (!in_array($userEntrega->Correo, $correosDestino)) $correosDestino[] = $userEntrega->Correo;
             }
-
             $userRecibe = User::where('Nombre', $entrega->auxiliar_recibe)->first();
             if ($userRecibe && $userRecibe->Correo) {
-                if (!in_array($userRecibe->Correo, $correosDestino)) {
-                    $correosDestino[] = $userRecibe->Correo;
-                }
+                if (!in_array($userRecibe->Correo, $correosDestino)) $correosDestino[] = $userRecibe->Correo;
             }
 
-            // AQUI ESTÁ EL CAMBIO IMPORTANTE: Enviamos el nuevo correo de Discos
             Mail::to($correosDestino)->send(new EntregaDiscoAprobada($entrega));
-
         } catch (\Exception $e) {
-            return redirect()
-                ->route('entregasDiscos.index')
-                ->with('success', 'Entrega aprobada, pero hubo error enviando correos: ' . $e->getMessage());
+            return redirect()->route('entregasDiscos.index')
+                ->with('success', 'Entrega aprobada, pero hubo error en correos: ' . $e->getMessage());
         }
 
-        return redirect()
-            ->route('entregasDiscos.index')
+        return redirect()->route('entregasDiscos.index')
             ->with('success', 'Entrega aprobada y se enviaron notificaciones.');
     }
 }

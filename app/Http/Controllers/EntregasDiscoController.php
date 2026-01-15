@@ -7,7 +7,7 @@ use App\Mail\EntregaDiscoAprobada;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage; // Importante para manejar archivos
+use Illuminate\Support\Facades\Storage; // Para manejar archivos
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class EntregasDiscoController extends Controller
@@ -49,6 +49,12 @@ class EntregasDiscoController extends Controller
         return view('EntregasDiscos.create');
     }
 
+    // --- MÉTODO RESTAURADO ---
+    public function createDos()
+    {
+        return view('EntregasDiscos.createDos');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -78,18 +84,22 @@ class EntregasDiscoController extends Controller
             'archivo'           => $archivoPath,
         ]);
 
+        // Redirección especial si viene del formulario público
+        if ($request->has('origen') && $request->origen == 'publico') {
+            return redirect()->route('entregasDiscos.createDos')
+               ->with('success', 'Entrega de disco registrada correctamente.');
+       }
+
         return redirect()->route('entregasDiscos.index')
             ->with('success', 'Entrega de disco registrada correctamente.');
     }
 
-    // --- NUEVO MÉTODO EDITAR ---
     public function edit($id)
     {
         $entrega = EntregasDisco::findOrFail($id);
         return view('EntregasDiscos.edit', compact('entrega'));
     }
 
-    // --- NUEVO MÉTODO UPDATE ---
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -105,7 +115,6 @@ class EntregasDiscoController extends Controller
         $data = $request->except(['archivo']);
 
         if ($request->hasFile('archivo')) {
-            // Eliminar archivo anterior si existe
             if ($entrega->archivo) {
                 Storage::disk('public')->delete($entrega->archivo);
             }
@@ -118,12 +127,10 @@ class EntregasDiscoController extends Controller
             ->with('success', 'Registro actualizado correctamente.');
     }
 
-    // --- NUEVO MÉTODO ELIMINAR ---
     public function destroy($id)
     {
         $entrega = EntregasDisco::findOrFail($id);
         
-        // Eliminar archivo físico
         if ($entrega->archivo) {
             Storage::disk('public')->delete($entrega->archivo);
         }

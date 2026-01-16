@@ -53,35 +53,51 @@ class EntregasEquipoController extends Controller
 
     public function store(Request $request)
     {
+        //  VALIDACIÓN
         $request->validate([
-            'nombre_equipo'     => 'required|string|max:150',
-            'usuario'           => 'required|string|max:150',
-            'auxiliar_entrega'  => 'required|string|max:150',
-            'auxiliar_recibe'   => 'required|string|max:150',
-            'fecha_entrega'     => 'required|date',
-            'estado'            => 'required|in:Remplazo,Libre',
-            'aprobado'          => 'required|in:Pendiente,Aprobado',
-            'archivo'           => 'nullable|file|max:5000'
+            'nombre_equipo' => 'required|string|max:150',
+            'usuario' => 'required|string|max:150',
+            'auxiliar_entrega' => 'required|string|max:150',
+            'auxiliar_recibe' => 'required|string|max:150',
+            'fecha_entrega' => 'required|date',
+            'estado' => 'required|in:Remplazo,Libre',
+            'aprobado' => 'required|in:Pendiente,Aprobado',
+            'archivo' => 'nullable|file|max:5000'
         ]);
 
+        // 2 MANEJO DE ARCHIVO
         $archivoPath = null;
         if ($request->hasFile('archivo')) {
-            $archivoPath = $request->file('archivo')->store('archivos_entregas', 'public');
+            $archivoPath = $request->file('archivo')
+                ->store('archivos_entregas', 'public');
         }
 
+        //  GUARDAR EN BD
         EntregasEquipo::create([
-            'nombre_equipo'     => $request->nombre_equipo,
-            'usuario'           => $request->usuario,
-            'auxiliar_entrega'  => $request->auxiliar_entrega,
-            'auxiliar_recibe'   => $request->auxiliar_recibe,
-            'fecha_entrega'     => $request->fecha_entrega,
-            'estado'            => $request->estado,
-            'aprobado'          => $request->aprobado,
-            'archivo'           => $archivoPath,
+            'nombre_equipo' => $request->nombre_equipo,
+            'usuario' => $request->usuario,
+            'auxiliar_entrega' => $request->auxiliar_entrega,
+            'auxiliar_recibe' => $request->auxiliar_recibe,
+            'fecha_entrega' => $request->fecha_entrega,
+            'estado' => $request->estado,
+            'aprobado' => $request->aprobado,
+            'archivo' => $archivoPath,
         ]);
 
-        return redirect()->route('entregasEquipos.index')->with('success', 'Entrega registrada correctamente.');
+        //  REDIRECCIÓN SEGÚN ORIGEN
+        //  Formulario público
+        if ($request->input('origen') === 'publico') {
+            return redirect()
+                ->route('entregasEquipos.createDos')
+                ->with('success', 'Entrega registrada correctamente.');
+        }
+
+        // 🔐 Formulario privado
+        return redirect()
+            ->route('entregasEquipos.index')
+            ->with('success', 'Entrega registrada correctamente.');
     }
+
 
     // --- MÉTODOS PARA EDITAR ---
 
@@ -94,12 +110,12 @@ class EntregasEquipoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre_equipo'     => 'required|string|max:150',
-            'usuario'           => 'required|string|max:150',
-            'auxiliar_entrega'  => 'required|string|max:150',
-            'auxiliar_recibe'   => 'required|string|max:150',
-            'estado'            => 'required|in:Remplazo,Libre',
-            'archivo'           => 'nullable|file|max:5000'
+            'nombre_equipo' => 'required|string|max:150',
+            'usuario' => 'required|string|max:150',
+            'auxiliar_entrega' => 'required|string|max:150',
+            'auxiliar_recibe' => 'required|string|max:150',
+            'estado' => 'required|in:Remplazo,Libre',
+            'archivo' => 'nullable|file|max:5000'
         ]);
 
         $entrega = EntregasEquipo::findOrFail($id);
@@ -144,11 +160,13 @@ class EntregasEquipoController extends Controller
             $correosDestino = ['camosquera@icesi.edu.co'];
             $userEntrega = User::where('Nombre', $entrega->auxiliar_entrega)->first();
             if ($userEntrega && $userEntrega->Correo) {
-                if (!in_array($userEntrega->Correo, $correosDestino)) $correosDestino[] = $userEntrega->Correo;
+                if (!in_array($userEntrega->Correo, $correosDestino))
+                    $correosDestino[] = $userEntrega->Correo;
             }
             $userRecibe = User::where('Nombre', $entrega->auxiliar_recibe)->first();
             if ($userRecibe && $userRecibe->Correo) {
-                if (!in_array($userRecibe->Correo, $correosDestino)) $correosDestino[] = $userRecibe->Correo;
+                if (!in_array($userRecibe->Correo, $correosDestino))
+                    $correosDestino[] = $userRecibe->Correo;
             }
             Mail::to($correosDestino)->send(new EntregaAprobada($entrega));
         } catch (\Exception $e) {

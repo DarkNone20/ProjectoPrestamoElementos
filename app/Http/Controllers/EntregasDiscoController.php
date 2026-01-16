@@ -58,14 +58,14 @@ class EntregasDiscoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_disco'      => 'required|string|max:150',
-            'usuario'           => 'required|string|max:150',
-            'auxiliar_entrega'  => 'required|string|max:150',
-            'auxiliar_recibe'   => 'required|string|max:150',
-            'fecha_entrega'     => 'required|date',
-            'estado'            => 'required|in:Remplazo,Libre',
-            'aprobado'          => 'required|in:Pendiente,Aprobado',
-            'archivo'           => 'nullable|file|max:5000'
+            'nombre_disco' => 'required|string|max:150',
+            'usuario' => 'required|string|max:150',
+            'auxiliar_entrega' => 'required|string|max:150',
+            'auxiliar_recibe' => 'required|string|max:150',
+            'fecha_entrega' => 'required|date',
+            'estado' => 'required|in:Remplazo,Libre',
+            'aprobado' => 'required|in:Pendiente,Aprobado',
+            'archivo' => 'nullable|file|max:5000'
         ]);
 
         $archivoPath = null;
@@ -74,24 +74,26 @@ class EntregasDiscoController extends Controller
         }
 
         EntregasDisco::create([
-            'nombre_disco'      => $request->nombre_disco,
-            'usuario'           => $request->usuario,
-            'auxiliar_entrega'  => $request->auxiliar_entrega,
-            'auxiliar_recibe'   => $request->auxiliar_recibe,
-            'fecha_entrega'     => $request->fecha_entrega,
-            'estado'            => $request->estado,
-            'aprobado'          => $request->aprobado,
-            'archivo'           => $archivoPath,
+            'nombre_disco' => $request->nombre_disco,
+            'usuario' => $request->usuario,
+            'auxiliar_entrega' => $request->auxiliar_entrega,
+            'auxiliar_recibe' => $request->auxiliar_recibe,
+            'fecha_entrega' => $request->fecha_entrega,
+            'estado' => $request->estado,
+            'aprobado' => $request->aprobado,
+            'archivo' => $archivoPath,
         ]);
 
-        // Redirección especial si viene del formulario público
-        if ($request->has('origen') && $request->origen == 'publico') {
+        // SI viene del formulario público → volver al formulario público
+        if ($request->input('origen') === 'publico') {
             return redirect()->route('entregasDiscos.createDos')
-               ->with('success', 'Entrega de disco registrada correctamente.');
-       }
+                ->with('success', 'Entrega de disco registrada correctamente.');
+        }
 
+        // SI viene del formulario privado → ir al index
         return redirect()->route('entregasDiscos.index')
             ->with('success', 'Entrega de disco registrada correctamente.');
+
     }
 
     public function edit($id)
@@ -103,12 +105,12 @@ class EntregasDiscoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre_disco'      => 'required|string|max:150',
-            'usuario'           => 'required|string|max:150',
-            'auxiliar_entrega'  => 'required|string|max:150',
-            'auxiliar_recibe'   => 'required|string|max:150',
-            'estado'            => 'required|in:Remplazo,Libre',
-            'archivo'           => 'nullable|file|max:5000'
+            'nombre_disco' => 'required|string|max:150',
+            'usuario' => 'required|string|max:150',
+            'auxiliar_entrega' => 'required|string|max:150',
+            'auxiliar_recibe' => 'required|string|max:150',
+            'estado' => 'required|in:Remplazo,Libre',
+            'archivo' => 'nullable|file|max:5000'
         ]);
 
         $entrega = EntregasDisco::findOrFail($id);
@@ -130,7 +132,7 @@ class EntregasDiscoController extends Controller
     public function destroy($id)
     {
         $entrega = EntregasDisco::findOrFail($id);
-        
+
         if ($entrega->archivo) {
             Storage::disk('public')->delete($entrega->archivo);
         }
@@ -151,11 +153,13 @@ class EntregasDiscoController extends Controller
             $correosDestino = ['camosquera@icesi.edu.co'];
             $userEntrega = User::where('Nombre', $entrega->auxiliar_entrega)->first();
             if ($userEntrega && $userEntrega->Correo) {
-                if (!in_array($userEntrega->Correo, $correosDestino)) $correosDestino[] = $userEntrega->Correo;
+                if (!in_array($userEntrega->Correo, $correosDestino))
+                    $correosDestino[] = $userEntrega->Correo;
             }
             $userRecibe = User::where('Nombre', $entrega->auxiliar_recibe)->first();
             if ($userRecibe && $userRecibe->Correo) {
-                if (!in_array($userRecibe->Correo, $correosDestino)) $correosDestino[] = $userRecibe->Correo;
+                if (!in_array($userRecibe->Correo, $correosDestino))
+                    $correosDestino[] = $userRecibe->Correo;
             }
 
             Mail::to($correosDestino)->send(new EntregaDiscoAprobada($entrega));

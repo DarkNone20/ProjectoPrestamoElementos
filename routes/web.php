@@ -50,7 +50,7 @@ Route::delete('usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name
 
 
 // ==========================
-// ENTREGAS (Formulario simple)
+// ENTREGAS 
 // ==========================
 Route::get('/entregas/create', [EntregasController::class, 'create'])->name('entregas.create');
 Route::post('/entregas', [EntregasController::class, 'store'])->name('entregas.store');
@@ -58,7 +58,7 @@ Route::get('/entregas', [EntregasController::class, 'index'])->name('entregas.in
 
 
 // ==========================
-// TABLA DE ENTREGAS (CRUD)
+// TABLA DE ENTREGAS 
 // ==========================
 Route::get('/entregas/tablas', [EntregasTablasController::class, 'index'])->name('entregas.tablas')
 ->middleware('auth');
@@ -69,7 +69,7 @@ Route::put('/entregas/{id}', [EntregasTablasController::class, 'update'])->name(
 
 
 // ==========================
-// TABLA DE PRÉSTAMOS
+// TABLA DE PRÉSTAMOS INSUMOS
 // ==========================
 Route::get('/prestamos', [PrestamosController::class, 'index'])->name('prestamos.index');
 Route::get('/prestamos/create', [PrestamosController::class, 'create'])->name('prestamos.create');
@@ -77,7 +77,7 @@ Route::post('/prestamos', [PrestamosController::class, 'store'])->name('prestamo
 
 
 // ==========================
-// ENTREGAS DE EQUIPOS (NUEVA TABLA)
+// ENTREGAS DE EQUIPOS 
 // ==========================
 Route::get('/entregas-equipos', [EntregasEquipoController::class, 'index'])
     ->name('entregasEquipos.index')

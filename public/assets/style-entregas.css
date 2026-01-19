@@ -11,127 +11,207 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
-
-/* gradientes */
-
-.bg-gradient-primary {
-    background: linear-gradient(135deg, #007bff, #0056b3);
+/* =========================================
+   BOTÓN HAMBURGUESA
+   ========================================= */
+.menu-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1200; /* Aumentado para estar siempre arriba */
+    cursor: pointer;
+    background: white;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
 }
 
-
-/* Encabezado */
-
-.Encabezado {
-    border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 4px;
+    background: #007bff;
+    border-radius: 3px;
+    transition: 0.3s;
 }
 
-.Encabezado .Titulo h1 {
-    font-weight: 700;
-    letter-spacing: 0.5px;
+/* =========================================
+   MENÚ LATERAL - OPTIMIZADO
+   ========================================= */
+nav {
+    position: fixed;
+    top: 0;
+    left: -260px; /* Un poco más ancho para sombra */
+    width: 260px;
+    height: 100vh;
+    background: linear-gradient(to bottom, #509af0, #0f5fb9, #0620b4);
+    padding-top: 70px;
+    transition: left 0.3s ease-in-out;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    
+    /* SOLUCIÓN AL CORTE: Scroll interno elegante */
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
-.Encabezado .Alias img {
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    transition: transform 0.2s ease-in-out;
+nav::-webkit-scrollbar {
+    width: 6px;
+}
+nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
 }
 
-.Encabezado .Alias img:hover {
-    transform: scale(1.1);
+nav.active {
+    left: 0;
 }
 
-
-/* Estilos del formulario dentro de la tarjeta */
-
-.card-header h2 {
-    font-weight: 600;
-    letter-spacing: 0.8px;
+#navMenu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%; /* Importante para empujar el logout */
+    padding: 0;
+    margin: 0;
 }
 
-.form-label {
-    color: #495057;
-    margin-bottom: 0.75rem;
+#navMenu .logo {
+    text-align: center;
+    padding: 0 1.5rem;
+    margin-bottom: 2rem;
 }
+
+#navMenu .logo img {
+    max-width: 180px;
+    height: auto;
+}
+
+#navMenu .Menu {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem; /* Espacio más compacto y proporcional */
+    padding: 0 1rem;
+}
+
+#navMenu li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 12px 15px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+#navMenu li a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffe600;
+    transform: translateX(5px);
+}
+
+#navMenu li a img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+#navMenu .Prueba {
+    margin-top: auto; 
+    padding: 2rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Wrapper del contenido */
+#main-content-wrapper {
+    transition: margin-left 0.3s ease-in-out;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* =========================================
+   ESTILOS DE CONTENIDO (Mantenidos)
+   ========================================= */
+.bg-gradient-primary { background: linear-gradient(135deg, #007bff, #0056b3); }
+.Encabezado { border-bottom: 3px solid rgba(0, 0, 0, 0.1); }
+.Encabezado .Titulo h1 { font-weight: 700; letter-spacing: 0.5px; }
+.Encabezado .Alias img { border: 2px solid rgba(255, 255, 255, 0.7); transition: transform 0.2s ease; }
+.Encabezado .Alias img:hover { transform: scale(1.1); }
+
+.card-header h2 { font-weight: 600; letter-spacing: 0.8px; }
+.form-label { color: #495057; margin-bottom: 0.75rem; font-weight: 500; }
 
 .form-control-lg {
-    padding: 1rem 1.25rem;
+    padding: 0.8rem 1.25rem;
     border-radius: 0.75rem;
-    /* Bordes más redondeados */
     border: 1px solid #ced4da;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: all 0.2s;
 }
 
 .form-control-lg:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
 }
-
-
-/* Estilos para los botones */
 
 .btn-lg {
     padding: 0.75rem 1.5rem;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     border-radius: 0.75rem;
     font-weight: 600;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s;
 }
 
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2); }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
-}
+footer { font-size: 0.85rem; border-top: 1px solid rgba(0, 0, 0, 0.05); }
 
-.btn-outline-secondary {
-    border-color: #6c757d;
-    color: #6c757d;
-}
-
-.btn-outline-secondary:hover {
-    background-color: #6c757d;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
-}
-
-
-/* Footer */
-
-footer {
-    font-size: 0.9rem;
-    border-top: 3px solid rgba(255, 255, 255, 0.1);
-}
-
-
-/* Media Queries */
+/* =========================================
+   MEDIA QUERIES - PROPORCIONALIDAD TOTAL
+   ========================================= */
 
 @media (max-width: 768px) {
-    .Encabezado .Titulo h1 {
-        font-size: 1.5rem;
+    nav { width: 240px; }
+    
+    #navMenu .logo img { max-width: 140px; }
+    
+    #navMenu li a { 
+        font-size: 0.95rem; 
+        padding: 10px;
+        gap: 10px; 
     }
-    .Encabezado .Alias p {
-        display: none !important;
-    }
-    .card-body {
-        padding: 1.5rem;
-    }
-    .btn-lg {
-        width: 100%;
-    }
-    .d-md-flex {
-        flex-direction: column;
-    }
-    .me-md-2 {
-        margin-right: 0 !important;
-        margin-bottom: 1rem;
-    }
+    
+    #navMenu li a img { width: 22px; height: 22px; }
+    
+    .Encabezado .Titulo h1 { font-size: 1.3rem; }
+    .Encabezado .Alias p { display: none !important; }
+    
+    .btn-lg { width: 100%; margin-bottom: 0.5rem; }
+    .d-md-flex { flex-direction: column; }
+}
+
+/* Ajuste para pantallas muy bajitas o celulares horizontales */
+@media (max-height: 550px) {
+    nav { padding-top: 50px; }
+    #navMenu .logo { margin-bottom: 0.5rem; }
+    #navMenu .logo img { max-width: 100px; }
+    #navMenu li a { padding: 6px 15px; }
+    #navMenu .Prueba { padding: 1rem; }
+}
+
+@media (max-width: 480px) {
+    .menu-toggle { top: 0.5rem; left: 0.5rem; padding: 0.4rem; }
+    .card-body { padding: 1.2rem; }
 }

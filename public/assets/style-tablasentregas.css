@@ -23,7 +23,7 @@ body {
 }
 
 /* =========================================
-   2. MENÚ LATERAL Y BOTÓN HAMBURGUESA
+   2. BOTÓN HAMBURGUESA 
    ========================================= */
 .menu-toggle {
     position: fixed;
@@ -58,33 +58,42 @@ body {
     transition: 0.3s;
 }
 
+
+
 .menu-toggle.active span:nth-child(1) {
     transform: rotate(45deg) translate(6px, 6px);
 }
+
 .menu-toggle.active span:nth-child(2) {
     opacity: 0;
 }
+
 .menu-toggle.active span:nth-child(3) {
     transform: rotate(-45deg) translate(6px, -6px);
 }
 
 body.menu-open .menu-toggle {
     left: calc(250px + 1rem);
-    transition: left 0.3s ease-in-out;
 }
 
-/* Menú lateral */
+/* =========================================
+   3. MENÚ LATERAL (TAMAÑO 250PX / ICONOS 32PX)
+   ========================================= */
 nav {
     position: fixed;
     top: 0;
     left: -250px;
     width: 250px;
-    height: 100%;
+    height: 100vh;
     background: linear-gradient(to bottom, #509af0, #0f5fb9, #0620b4);
     padding-top: 60px;
     transition: left 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: 1050;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
 
 nav.active {
@@ -95,65 +104,64 @@ nav.active {
     list-style: none;
     display: flex;
     flex-direction: column;
-    height: 100%;
-}
-
-#navMenu .Menu,
-#navMenu .Prueba {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 0 1.5rem;
-    margin-left: -30px;
-}
-
-#navMenu .Prueba {
-    margin-top: auto;
-    padding-bottom: 2rem;
+    min-height: 100%;
+    padding: 0;
 }
 
 #navMenu .logo {
     text-align: center;
     margin-bottom: 1rem;
-    margin-left: -30px;
-    background: none;
+    padding: 0 1rem;
 }
 
 #navMenu .logo img {
-    max-width: 250px;
-    background: none;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+}
+
+#navMenu .Menu {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 1rem;
 }
 
 #navMenu li a {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     color: #fff;
     text-decoration: none;
-    font-size: 1.5rem;
-    transition: transform 0.2s, color 0.2s;
-    margin: 10px;
-    padding: 5px;
+    font-size: 1.3rem;
+    padding: 8px 12px;
     border-radius: 8px;
+    transition: 0.2s;
 }
 
 #navMenu li a:hover {
     color: #ffe600;
-    transform: translateX(5px);
     background-color: rgba(255, 255, 255, 0.1);
 }
 
 #navMenu li a img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
 }
 
-/* Wrapper */
+#navMenu .Prueba {
+    margin-top: auto;
+    padding: 1rem 1rem 2rem;
+}
+
+/* =========================================
+   4. ENCABEZADO (CENTRADO Y ALINEACIÓN ALIAS)
+   ========================================= */
 .main-content-wrapper {
     position: relative;
-    left: 0;
     width: 100%;
-    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+    transition: margin-left 0.3s ease;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -164,240 +172,124 @@ body.menu-open .main-content-wrapper {
     width: calc(100% - 250px);
 }
 
-/* =========================================
-   3. ENCABEZADO SUPERIOR
-   ========================================= */
 .Encabezado {
-    border-bottom: 3px solid rgba(90, 125, 240, 0.897);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: linear-gradient(to right, #509af0, #0f5fb9, #6006b4);
-    padding: 1rem;
+    padding: 1rem 2rem;
     color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid rgba(90, 125, 240, 0.8);
+    min-height: 80px;
 }
 
-.Encabezado .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+.Encabezado::before {
+    content: "";
+    width: 200px;
 }
 
 .Encabezado .Titulo {
-    flex: 1;
+    flex-grow: 1;
     text-align: center;
 }
 
 .Encabezado .Titulo h1 {
     font-weight: 900;
-    letter-spacing: 0.8px;
-    text-align: center;
-    color: #fff;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.Alias {
+    min-width: 200px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .Alias a {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    gap: 12px;
     text-decoration: none;
-    color: inherit;
-    padding-right: 1rem;
+    color: #fff;
 }
 
 .Alias img {
-    width: 40px;
-    height: 40px;
-    margin-left: 6px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    margin-right: 6px;
     border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .Alias p {
-    font-size: 1rem;
+    margin: 0;
     font-weight: bold;
-    margin: 0;
+    font-size: 1.1rem;
 }
 
-/* =========================================
-   4. TARJETAS (CARDS)
-   ========================================= */
-.card {
-    border: none;
-    border-top: 5px solid #b6c3d3;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card:hover {
-    box-shadow: 0 12px 30px rgba(80, 154, 240, 0.12);
-    transform: translateY(-3px);
-}
-
-.card .card-header {
-    background: linear-gradient(135deg, #4a8fe7 0%, #2e7fc9 50%, #0f5fb9 100%);
-    color: #fff;
-    border: none;
-    padding: 1.25rem 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 700;
-}
-
-.card-header h2 {
-    margin: 0;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-}
-
-/* =========================================
-   5. BOTONES Y ALERTAS
-   ========================================= */
-.btn-editar {
-    background-color: #0d6efd;
-    border-color: #0b5ed7;
-    color: white;
-    transition: 0.2s ease-in-out;
-}
-
-.btn-editar:hover {
-    background-color: #084298;
-    border-color: #052c65;
-    transform: translateY(-2px);
-}
-
-.alert {
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    padding: 1rem 1.25rem;
-}
-
-/* =========================================
-   6. TABLA AZUL (CORREGIDO)
-   ========================================= */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    border-radius: 12px;
-}
-
-.table {
-    width: 100%;
-    margin-bottom: 0;
-    border-collapse: separate; 
-    border-spacing: 0;
-}
-
-/* Encabezado Transparente para permitir background del TH */
-.table thead {
-    border: none !important;
-    background: transparent !important;
-}
-
-/* Celdas del encabezado (Aquí está la magia del Azul) */
 .table thead tr th {
-    /* Background Image tiene prioridad sobre colores planos de Bootstrap */
     background-image: linear-gradient(135deg, #4a8fe7 0%, #0f5fb9 100%) !important;
-    background-color: #0f5fb9 !important; /* Respaldo */
+    background-color: #0f5fb9 !important;
     color: #ffffff !important;
-    
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
+    border: none !important;
+    padding: 15px !important;
     font-weight: 700;
-    border-bottom: none !important;
-    padding: 15px;
+    text-transform: uppercase;
     vertical-align: middle;
 }
 
-/* Redondear esquinas superiores */
+/* Esquinas redondeadas del encabezado */
 .table thead tr:first-child th:first-child {
-    border-top-left-radius: 12px;
+    border-top-left-radius: 12px !important;
 }
+
 .table thead tr:first-child th:last-child {
-    border-top-right-radius: 12px;
+    border-top-right-radius: 12px !important;
 }
 
-/* Filas y Celdas del cuerpo */
-.table tbody tr {
-    border-bottom: 1px solid #dee2e6;
-}
-.table tbody tr:last-child {
-    border-bottom: none;
-}
-.table tbody td {
-    padding: 1rem;
-    vertical-align: middle;
-    color: #333;
-    background-color: #fff;
+/* Agrega esto al final de tu archivo CSS */
+.bg-azul-claro {
+    background: linear-gradient(135deg, #1781df 0%, #1623e0 100%) !important;
+    border: none !important;
 }
 
-/* Hover */
-.table tbody tr:hover td {
-    background-color: #f1f8ff !important;
+/* Si quieres que el texto "Entregas Registradas" tenga una pequeña sombra para leerse mejor */
+.bg-azul-claro h2 {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
+
 
 /* =========================================
-   7. PAGINACIÓN Y FOOTER
-   ========================================= */
-.pagination {
-    margin-top: 20px;
-}
-
-.pagination .page-item .page-link {
-    margin: 0 2px;
-    border-radius: 4px;
-    color: #007bff;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    transition: all 0.2s;
-}
-
-.pagination .page-item.active .page-link {
-    z-index: 1;
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.pagination .page-item .page-link:hover {
-    color: #0056b3;
-    background-color: #e9ecef;
-}
-
-footer {
-    margin-top: auto;
-    background-color: #212529;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-    border-top: 3px solid rgba(255, 255, 255, 0.1);
-}
-
-/* =========================================
-   8. RESPONSIVE
+   5. MEDIA QUERIES (ADAPTACIÓN)
    ========================================= */
 @media (max-width: 991px) {
-    body.menu-open .menu-toggle { left: calc(220px + 1rem); }
-}
 
-@media (min-width: 768px) and (max-width: 991px) {
-    nav { width: 220px; }
-    body.menu-open .main-content-wrapper { margin-left: 220px; width: calc(100% - 220px); }
+    .Encabezado::before,
+    .Alias {
+        min-width: auto;
+        width: auto;
+    }
 }
 
 @media (max-width: 767px) {
-    nav { width: 200px; }
-    .Titulo h1 { font-size: 1.5rem; }
-    .Alias p { display: none !important; }
-    
-    body.menu-open .main-content-wrapper { margin-left: 200px; width: calc(100% - 200px); }
-    
-    .menu-toggle { top: 0.5rem; left: 0.5rem; }
-    body.menu-open .menu-toggle { left: calc(200px + 1rem); }
+    nav {
+        width: 220px;
+    }
+
+    .Encabezado .Titulo h1 {
+        font-size: 1.5rem;
+    }
+
+    .Encabezado .Alias p {
+        display: none !important;
+    }
+
+    body.menu-open .main-content-wrapper {
+        margin-left: 220px;
+        width: calc(100% - 220px);
+    }
+
+    body.menu-open .menu-toggle {
+        left: calc(220px + 1rem);
+    }
 }

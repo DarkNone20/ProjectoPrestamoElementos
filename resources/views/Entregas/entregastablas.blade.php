@@ -8,35 +8,12 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+
     <!-- Tu CSS Personalizado -->
     <link rel="stylesheet" href="{{ asset('assets/style-tablasentregas.css') }}">
-
-    <!-- ESTILOS FORZADOS (Solución definitiva al encabezado negro) -->
-    <style>
-        /* Forzar degradado azul en los encabezados de tabla */
-        .table thead tr th {
-            background-image: linear-gradient(135deg, #4a8fe7 0%, #0f5fb9 100%) !important;
-            background-color: #0f5fb9 !important; /* Fallback */
-            color: #ffffff !important;
-            border: none !important;
-            padding: 15px !important;
-            font-weight: 700;
-            text-transform: uppercase;
-            vertical-align: middle;
-        }
-        
-        /* Esquinas redondeadas del encabezado */
-        .table thead tr:first-child th:first-child {
-            border-top-left-radius: 12px !important;
-        }
-        .table thead tr:first-child th:last-child {
-            border-top-right-radius: 12px !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -62,22 +39,35 @@
     </button>
 
     <!-- MENÚ LATERAL -->
+
+    {{-- MENÚ LATERAL --}}
     <nav id="sidebar">
         <ul id="navMenu">
             <li class="logo">
                 <img src="{{ asset('Imagenes/Logo5.png') }}" alt="Logo">
             </li>
-
             <div class="Menu">
-                <li><a href="{{ route('home') }}"><img src="{{ asset('Imagenes/Home.png') }}" alt="Inicio"> Home</a></li>
-                <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}" alt="Usuarios"> Usuarios</a></li>
-                <li><a href="{{ route('prestamos.index') }}"><img src="{{ asset('Imagenes/Elementos.png') }}" alt="Insumos"> Insumos</a></li>
-                <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/lista.png') }}" alt="Entregas"> Entregas</a></li>
+                <li><a href="{{ route('home') }}"><img src="{{ asset('Imagenes/Home.png') }}" alt="Inicio"> Home</a>
+                </li>
+                <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}" alt="Usuarios">
+                        Usuarios</a></li>
+                <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/Elementos.png') }}"
+                            alt="Insumos">
+                        Insumos</a></li>
+                <li><a href="{{ route('prestamos.index') }}"><img src="{{ asset('Imagenes/lista.png') }}"
+                            alt="Entregas">
+                        Entregas</a></li>
+                <li><a href="{{ route('entregasDiscos.index') }}"><img src="{{ asset('Imagenes/Discos.png') }}"
+                            alt="Discos">
+                        Discos</a></li>
+                <li><a href="{{ route('entregasEquipos.index') }}"><img src="{{ asset('Imagenes/Pc.png') }}"
+                            alt="Portatiles">
+                        Portatiles</a></li>
             </div>
-
             <div class="Prueba">
                 <li>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <img src="{{ asset('Imagenes/salir.png') }}" alt="Salir"> Logout
                     </a>
                 </li>
@@ -92,9 +82,10 @@
     <div class="main-content-wrapper">
         <div class="container mt-5 mb-5">
             <div class="card shadow-lg border-0 rounded-4">
-                
+
                 <!-- CABECERA DE LA TARJETA -->
-                <div class="card-header bg-gradient-primary text-white text-center py-4 rounded-top-4">
+                
+                <div class="card-header bg-azul-claro text-white text-center py-4 rounded-top-4">
                     <h2 class="mb-0">Entregas Registradas</h2>
                 </div>
 
@@ -128,7 +119,8 @@
                                         <td>{{ $entrega->Caso }}</td>
                                         <td>{{ \Carbon\Carbon::parse($entrega->Fecha)->format('d/m/Y') }}</td>
                                         <td>
-                                            <a href="{{ route('entregas.edit', $entrega->id) }}" class="btn btn-editar btn-sm">
+                                            <a href="{{ route('entregas.edit', $entrega->id) }}"
+                                                class="btn btn-editar btn-sm">
                                                 <i class="fas fa-edit"></i> Editar
                                             </a>
                                         </td>

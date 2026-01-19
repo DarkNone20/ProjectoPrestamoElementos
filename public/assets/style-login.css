@@ -1,185 +1,250 @@
-/* 1. RESET Y CONFIGURACIÓN BASE */
+/* --- VARIABLES --- */
+:root {
+    --bg-gradient: linear-gradient(135deg, #4da0f1, #0d5db6, #5905aa);
+    --primary-blue: #0d5db6;
+    --accent-purple: #5905aa;
+    --text-dark: #2d3748;
+    --text-light: #718096;
+    --white: #ffffff;
+    --input-bg: #f7fafc;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- RESET --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
+    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
-    width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #4da0f1, #0d5db6, #5905aa);
+    justify-content: center;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
     padding: 20px;
 }
 
-/* 2. TARJETA PRINCIPAL (Diseño Rectangular Proporcional) */
-.Group {
+/* --- CONTENEDOR TARJETA --- */
+.login-card {
+    background: var(--white);
+    width: 100%;
+    max-width: 1050px;
     display: grid;
-    /* 1.4fr para el formulario y 1fr para la mascota crea el efecto rectangular */
-    grid-template-columns: 1.4fr 1fr; 
-    gap: 40px;
-    width: 95%;
-    max-width: 1150px; /* Ancho máximo para pantallas grandes */
-    height: auto;
-    min-height: 520px; 
-    background-color: #ffffff;
-    border-radius: 40px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-    /* Padding proporcional: mínimo 30px, ideal 4vw, máximo 60px */
-    padding: clamp(30px, 5vw, 70px); 
-    align-items: center;
-    position: relative;
+    grid-template-columns: 1.1fr 1fr;
+    border-radius: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
     overflow: hidden;
+    animation: fadeInScale 0.6s ease-out;
 }
 
-/* 3. COLUMNA IZQUIERDA: FORMULARIO */
-.Group-Uno {
-    width: 100%;
+/* --- SECCIÓN FORMULARIO --- */
+.form-container {
+    padding: clamp(40px, 6vw, 70px);
     display: flex;
     flex-direction: column;
+    justify-content: center;
+}
+
+.brand {
+    margin-bottom: 35px;
 }
 
 .logo {
-    width: 100%;
-    max-width: clamp(200px, 22vw, 280px); /* El logo escala con la pantalla */
+    max-width: 200px;
     height: auto;
-    margin-bottom: clamp(20px, 4vw, 45px);
+    margin-bottom: 20px;
 }
 
-label {
-    display: block;
-    color: #1a0b8c;
-    font-size: clamp(1rem, 1.2vw, 1.3rem);
+.brand h1 {
+    font-size: 28px;
+    color: var(--text-dark);
     font-weight: 700;
-    margin-bottom: 10px;
 }
 
-/* 4. CONTENEDOR DE INPUT E ICONO (Centrado Perfecto) */
-.input-icon {
-    position: relative; 
-    width: 100%;
-    margin-bottom: 25px;
+.brand p {
+    color: var(--text-light);
+    font-size: 15px;
+}
+
+/* --- INPUTS --- */
+.input-group {
+    margin-bottom: 22px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    margin-left: 4px;
+}
+
+.input-wrapper {
+    position: relative;
     display: flex;
-    flex-direction: column;
-}
-
-.input-icon input {
-    width: 100%;
-    /* Altura proporcional */
-    height: clamp(50px, 4vw, 65px); 
-    padding: 0 20px 0 55px; /* Espacio de 55px para el icono */
-    font-size: clamp(0.9rem, 1.1vw, 1.1rem);
-    background-color: #ecf1f4;
-    border: none;
-    border-radius: 18px;
-    outline: none;
-    color: #333;
-    transition: background 0.3s;
-}
-
-.input-icon input:focus {
-    background-color: #e2e8ec;
-}
-
-/* FIX: Centrado del icono respecto al INPUT (ignorando el label) */
-.input-icon img {
-    position: absolute;
-    left: 18px;
-    /* Calculamos la posición: 
-       La etiqueta mide aprox 1.5rem + 10px de margen. 
-       Fijamos el icono desde el fondo del contenedor para que siempre esté centrado en el input gris. */
-    bottom: clamp(13px, 1.2vw, 20px); 
-    width: clamp(20px, 1.8vw, 24px);
-    height: auto;
-    opacity: 0.6;
-    pointer-events: none;
-}
-
-/* 5. BOTÓN DE INICIO */
-button {
-    width: 100%;
-    height: clamp(55px, 4.5vw, 75px);
-    background-color: #00008b;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    font-size: clamp(1.1rem, 1.4vw, 1.5rem);
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 15px;
-}
-
-button:hover {
-    background-color: #000060;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 139, 0.3);
-}
-
-/* 6. COLUMNA DERECHA: MASCOTA */
-.Group-Dos {
-    display: flex;
-    justify-content: center;
     align-items: center;
 }
 
-.Group-Dos img {
+.field-icon {
+    position: absolute;
+    left: 18px;
+    width: 20px;
+    opacity: 0.4;
+    transition: var(--transition);
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 16px 16px 16px 52px;
+    background: var(--input-bg);
+    border: 2px solid transparent;
+    border-radius: 16px;
+    font-size: 15px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.input-wrapper input:focus {
+    background: var(--white);
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 4px rgba(13, 93, 182, 0.1);
+}
+
+.input-wrapper input:focus + .field-icon {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* --- BOTÓN --- */
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: var(--transition);
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background: var(--accent-purple);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(89, 5, 170, 0.3);
+}
+
+.arrow-icon {
+    transition: var(--transition);
+}
+
+.btn-primary:hover .arrow-icon {
+    transform: translateX(5px);
+}
+
+/* --- SECCIÓN VISUAL (MASCOTA) --- */
+.visual-container {
+    background: #f0f7ff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    overflow: hidden;
+}
+
+.visual-bg-decoration {
+    position: absolute;
+    width: 160%;
+    height: 160%;
+    background: var(--bg-gradient);
+    opacity: 0.05;
+    border-radius: 50%;
+}
+
+.floating-mascot img {
     max-width: 100%;
     height: auto;
-    max-height: 480px; /* Evita que la mascota agrande la tarjeta hacia arriba */
-    object-fit: contain;
+    max-height: 600px;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1));
+    animation: float 4s ease-in-out infinite;
 }
 
-/* 7. ADAPTACIÓN PARA DIFERENTES PANTALLAS (RESPONSIVE) */
-
-/* Tablets y Laptops Pequeñas */
-@media (max-width: 1100px) {
-    .Group {
-        max-width: 950px;
-        gap: 30px;
-        padding: 40px;
-    }
+/* --- ALERTAS --- */
+.error-toast {
+    background: #fff5f5;
+    color: #c53030;
+    padding: 14px;
+    border-radius: 12px;
+    border-left: 4px solid #c53030;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: shake 0.4s ease-in-out;
 }
 
-/* Móviles (Cambio a diseño vertical) */
+.error-icon {
+    background: #c53030;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* --- ANIMACIONES --- */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* --- RESPONSIVE --- */
 @media (max-width: 850px) {
-    .Group {
-        grid-template-columns: 1fr; /* Una sola columna para que no se vea apretado */
+    .login-card {
+        grid-template-columns: 1fr;
         max-width: 500px;
-        padding: 40px 30px;
-        text-align: left;
-    }
-
-    .Group-Uno {
-        order: 2; /* Formulario abajo */
-    }
-
-    .Group-Dos {
-        order: 1; /* Mascota arriba */
-        margin-bottom: 20px;
-    }
-
-    .Group-Dos img {
-        max-height: 220px;
-    }
-
-    .logo {
-        margin: 0 auto 30px auto; /* Centrar logo en móviles */
-    }
-}
-
-/* Móviles muy pequeños */
-@media (max-width: 480px) {
-    .Group {
-        border-radius: 30px;
-        padding: 30px 20px;
     }
     
-    .input-icon input {
-        height: 50px;
+    .visual-container {
+        order: -1; 
+        padding: 30px;
+    }
+    
+    .floating-mascot img {
+        max-height: 180px;
+    }
+
+    .form-container {
+        padding: 40px 30px;
     }
 }

@@ -27,25 +27,39 @@
 
     <!-- SIDEBAR -->
     <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
-    <nav id="sidebar">
-        <ul id="navMenu">
-            <li class="logo"><img src="{{ asset('Imagenes/Logo5.png') }}" alt="Logo"></li>
-            <div class="Menu">
-                <li><a href="{{ route('home') }}"><img src="{{ asset('Imagenes/Home.png') }}"> Home</a></li>
-                <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}"> Usuarios</a></li>
-                <li><a href="{{ route('prestamos.index') }}"><img src="{{ asset('Imagenes/Elementos.png') }}"> Insumos</a></li>
-                <li><a href="{{ route('entregasEquipos.index') }}"><img src="{{ asset('Imagenes/lista.png') }}"> Entregas</a></li>
-            </div>
-            <div class="Prueba">
-                <li>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <img src="{{ asset('Imagenes/salir.png') }}"> Logout
-                    </a>
-                </li>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">@csrf</form>
-            </div>
-        </ul>
-    </nav>
+   
+  {{-- MENÚ LATERAL --}}
+  <nav id="sidebar">
+    <ul id="navMenu">
+      <li class="logo">
+        <img src="{{ asset('Imagenes/Logo5.png') }}" alt="Logo">
+      </li>
+      <div class="Menu">
+        <li><a href="{{ route('home') }}"><img src="{{ asset('Imagenes/Home.png') }}" alt="Inicio"> Home</a></li>
+        <li><a href="{{ route('usuarios.index') }}"><img src="{{ asset('Imagenes/Group.png') }}" alt="Usuarios">
+            Usuarios</a></li>
+        <li><a href="{{ route('entregas.tablas') }}"><img src="{{ asset('Imagenes/Elementos.png') }}" alt="Insumos">
+            Insumos</a></li>
+        <li><a href="{{ route('prestamos.index') }}"><img src="{{ asset('Imagenes/lista.png') }}" alt="Entregas">
+            Entregas</a></li>
+        <li><a href="{{ route('entregasDiscos.index') }}"><img src="{{ asset('Imagenes/Discos.png') }}" alt="Discos">
+            Discos</a></li>
+        <li><a href="{{ route('entregasEquipos.index') }}"><img src="{{ asset('Imagenes/Pc.png') }}" alt="Portatiles">
+            Portatiles</a></li>
+      </div>
+      <div class="Prueba">
+        <li>
+          <a href="{{ route('logout') }}"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <img src="{{ asset('Imagenes/salir.png') }}" alt="Salir"> Logout
+          </a>
+        </li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+          @csrf
+        </form>
+      </div>
+    </ul>
+  </nav>
 
     <!-- CONTENIDO -->
     <div class="main-content-wrapper">

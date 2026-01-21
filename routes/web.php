@@ -80,34 +80,26 @@ Route::post('/prestamos', [PrestamosController::class, 'store'])->name('prestamo
 // ENTREGAS DE EQUIPOS 
 // ==========================
 Route::get('/entregas-equipos', [EntregasEquipoController::class, 'index'])
-    ->name('entregasEquipos.index')
-    ->middleware('auth');
+    ->name('entregasEquipos.index');
 
 Route::get('/entregas-equipos/create', [EntregasEquipoController::class, 'create'])
-    ->name('entregasEquipos.create')
-    ->middleware('auth');
+    ->name('entregasEquipos.create');
 
     Route::get('/entregas-equipos/createDos', [EntregasEquipoController::class, 'createDos'])
     ->name('entregasEquipos.createDos');
 
 
 Route::post('/entregas-equipos', [EntregasEquipoController::class, 'store'])
-    ->name('entregasEquipos.store')
-    ->middleware('auth');
+    ->name('entregasEquipos.store');
 
 
 Route::patch('/entregas-equipos/{id}/aprobar', [EntregasEquipoController::class, 'aprobar'])
-    ->name('entregasEquipos.aprobar')
-    ->middleware('auth');
-Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('usuarios.buscar')
-->middleware('auth');
+    ->name('entregasEquipos.aprobar');
+Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('usuarios.buscar');
 
-Route::get('/entregas-equipos/{id}/edit', [EntregasEquipoController::class, 'edit'])->name('entregasEquipos.edit')
-->middleware('auth');
-Route::put('/entregas-equipos/{id}', [EntregasEquipoController::class, 'update'])->name('entregasEquipos.update')
-->middleware('auth');
-Route::delete('/entregas-equipos/{id}', [EntregasEquipoController::class, 'destroy'])->name('entregasEquipos.destroy')
-->middleware('auth');
+Route::get('/entregas-equipos/{id}/edit', [EntregasEquipoController::class, 'edit'])->name('entregasEquipos.edit')->middleware('auth');
+Route::put('/entregas-equipos/{id}', [EntregasEquipoController::class, 'update'])->name('entregasEquipos.update')->middleware('auth');
+Route::delete('/entregas-equipos/{id}', [EntregasEquipoController::class, 'destroy'])->name('entregasEquipos.destroy')->middleware('auth');
 
 
 // ==========================
@@ -116,29 +108,22 @@ Route::delete('/entregas-equipos/{id}', [EntregasEquipoController::class, 'destr
 
 
 Route::get('/entregas-discos', [EntregasDiscoController::class, 'index'])
-    ->name('entregasDiscos.index')
-    ->middleware('auth');
+    ->name('entregasDiscos.index');
 
 
 Route::get('/entregas-discos/create', [EntregasDiscoController::class, 'create'])
-    ->name('entregasDiscos.create')
-    ->middleware('auth');
+    ->name('entregasDiscos.create');
 
 Route::get('/entregas-discos/createDos', [EntregasDiscoController::class, 'createDos'])
     ->name('entregasDiscos.createDos');
 
 
 Route::post('/entregas-discos', [EntregasDiscoController::class, 'store'])
-    ->name('entregasDiscos.store')
-    ->middleware('auth');
+    ->name('entregasDiscos.store');
 
 Route::patch('/entregas-discos/{id}/aprobar', [EntregasDiscoController::class, 'aprobar'])
-    ->name('entregasDiscos.aprobar')
-    ->middleware('auth');
+    ->name('entregasDiscos.aprobar');
 
-Route::get('/entregas-discos/{id}/edit', [EntregasDiscoController::class, 'edit'])->name('entregasDiscos.edit')
-    ->middleware('auth');
-Route::put('/entregas-discos/{id}', [EntregasDiscoController::class, 'update'])->name('entregasDiscos.update')
-    ->middleware('auth');
-Route::delete('/entregas-discos/{id}', [EntregasDiscoController::class, 'destroy'])->name('entregasDiscos.destroy')
-    ->middleware('auth');
+Route::get('/entregas-discos/{id}/edit', [EntregasDiscoController::class, 'edit'])->name('entregasDiscos.edit')->middleware('auth');
+Route::put('/entregas-discos/{id}', [EntregasDiscoController::class, 'update'])->name('entregasDiscos.update')->middleware('auth');
+Route::delete('/entregas-discos/{id}', [EntregasDiscoController::class, 'destroy'])->name('entregasDiscos.destroy')->middleware('auth');

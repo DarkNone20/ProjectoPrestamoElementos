@@ -30,6 +30,10 @@ Route::get('/home', [HomeController::class, 'showHome'])
     ->middleware('auth')
     ->name('home');
 
+Route::get('/dashboard', [HomeController::class, 'dashboard'])
+    ->middleware('auth')
+    ->name('dashboard');
+
 
 // ==========================
 // USUARIOS DEL SISTEMA
@@ -88,10 +92,17 @@ Route::get('/entregas-equipos/create', [EntregasEquipoController::class, 'create
     Route::get('/entregas-equipos/createDos', [EntregasEquipoController::class, 'createDos'])
     ->name('entregasEquipos.createDos');
 
+Route::get('/entregas-equipos/confirmacion/{id}', [EntregasEquipoController::class, 'confirmacion'])
+    ->name('entregasEquipos.confirmacion');
 
 Route::post('/entregas-equipos', [EntregasEquipoController::class, 'store'])
     ->name('entregasEquipos.store');
 
+// Edición pública (sin autenticación)
+Route::get('/entregas-equipos/{id}/edit-publico', [EntregasEquipoController::class, 'editPublico'])
+    ->name('entregasEquipos.editPublico');
+Route::put('/entregas-equipos/{id}/update-publico', [EntregasEquipoController::class, 'update'])
+    ->name('entregasEquipos.updatePublico');
 
 Route::patch('/entregas-equipos/{id}/aprobar', [EntregasEquipoController::class, 'aprobar'])
     ->name('entregasEquipos.aprobar');

@@ -51,6 +51,15 @@ class EntregasEquipoController extends Controller
         return view('EntregasEquipos.createDos');
     }
 
+    /**
+     * Muestra la confirmación del registro público
+     */
+    public function confirmacion($id)
+    {
+        $entrega = EntregasEquipo::findOrFail($id);
+        return view('EntregasEquipos.confirmacion', compact('entrega'));
+    }
+
     public function store(Request $request)
     {
         //  VALIDACIÓN
@@ -73,7 +82,7 @@ class EntregasEquipoController extends Controller
         }
 
         //  GUARDAR EN BD
-        EntregasEquipo::create([
+        $entrega = EntregasEquipo::create([
             'nombre_equipo' => $request->nombre_equipo,
             'usuario' => $request->usuario,
             'auxiliar_entrega' => $request->auxiliar_entrega,
@@ -85,11 +94,10 @@ class EntregasEquipoController extends Controller
         ]);
 
         //  REDIRECCIÓN SEGÚN ORIGEN
-        //  Formulario público
+        //  Formulario público - mostrar confirmación con los datos registrados
         if ($request->input('origen') === 'publico') {
             return redirect()
-                ->route('entregasEquipos.createDos')
-                ->with('success', 'Entrega registrada correctamente.');
+                ->route('entregasEquipos.confirmacion', $entrega->id);
         }
 
         // 🔐 Formulario privado
@@ -107,6 +115,15 @@ class EntregasEquipoController extends Controller
         return view('EntregasEquipos.edit', compact('entrega'));
     }
 
+    /**
+     * Edición desde formulario público
+     */
+    public function editPublico($id)
+    {
+        $entrega = EntregasEquipo::findOrFail($id);
+        return view('EntregasEquipos.editPublico', compact('entrega'));
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -119,7 +136,7 @@ class EntregasEquipoController extends Controller
         ]);
 
         $entrega = EntregasEquipo::findOrFail($id);
-        $data = $request->except(['archivo']);
+        $data = $request->except(['archivo', 'origen']);
 
         if ($request->hasFile('archivo')) {
             // Eliminar archivo viejo si existe
@@ -130,6 +147,11 @@ class EntregasEquipoController extends Controller
         }
 
         $entrega->update($data);
+
+        // Redirección según origen
+        if ($request->input('origen') === 'publico') {
+            return redirect()->route('entregasEquipos.confirmacion', $id);
+        }
 
         return redirect()->route('entregasEquipos.index')->with('success', 'Registro actualizado correctamente.');
     }

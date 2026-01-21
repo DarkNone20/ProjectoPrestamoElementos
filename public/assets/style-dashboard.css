@@ -1,0 +1,682 @@
+/* =========================================
+   DASHBOARD STYLES - Sistema de Inventarios
+   ========================================= */
+
+/* Dashboard Container */
+.dashboard-container {
+    padding: 1.5rem 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   ALERTAS Y NOTIFICACIONES
+   ========================================= */
+.alert-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    animation: slideDown 0.3s ease;
+}
+
+.alert-banner.warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+    border-left: 4px solid #ffc107;
+    color: #856404;
+}
+
+.alert-banner i {
+    font-size: 1.5rem;
+}
+
+.alert-banner p {
+    flex: 1;
+    margin: 0;
+}
+
+.alert-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.alert-close:hover {
+    opacity: 1;
+}
+
+/* =========================================
+   SECCIÓN DE BIENVENIDA
+   ========================================= */
+.welcome-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #509af0 0%, #0f5fb9 50%, #6006b4 100%);
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(80, 154, 240, 0.3);
+}
+
+.welcome-text h2 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.welcome-text p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+.quick-stats span {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.95rem;
+}
+
+.quick-stats i {
+    margin-right: 0.5rem;
+}
+
+/* =========================================
+   ACCIONES RÁPIDAS
+   ========================================= */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.quick-action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.quick-action-btn.entregas {
+    background: linear-gradient(135deg, #509af0, #0f5fb9);
+}
+
+.quick-action-btn.equipos {
+    background: linear-gradient(135deg, #28a745, #20913c);
+}
+
+.quick-action-btn.discos {
+    background: linear-gradient(135deg, #9b59b6, #7d3c98);
+}
+
+.quick-action-btn.prestamos {
+    background: linear-gradient(135deg, #fd7e14, #e96b02);
+}
+
+.quick-action-btn i {
+    font-size: 1.2rem;
+}
+
+/* =========================================
+   TARJETAS DE ESTADÍSTICAS
+   ========================================= */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Link wrapper para tarjetas clickeables */
+.stat-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.stat-card-link:hover .stat-card {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card-link:hover .stat-icon {
+    transform: scale(1.1);
+}
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Cursor pointer para indicar que es clickeable */
+.stat-card-link .stat-card {
+    cursor: pointer;
+}
+
+.stat-card.entregas::before { background: linear-gradient(to bottom, #509af0, #0f5fb9); }
+.stat-card.equipos::before { background: linear-gradient(to bottom, #28a745, #20913c); }
+.stat-card.discos::before { background: linear-gradient(to bottom, #9b59b6, #7d3c98); }
+.stat-card.prestamos::before { background: linear-gradient(to bottom, #fd7e14, #e96b02); }
+.stat-card.pendientes::before { background: linear-gradient(to bottom, #ffc107, #e0a800); }
+.stat-card.aprobados::before { background: linear-gradient(to bottom, #17a2b8, #138496); }
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.stat-card.entregas .stat-icon { background: linear-gradient(135deg, #509af0, #0f5fb9); }
+.stat-card.equipos .stat-icon { background: linear-gradient(135deg, #28a745, #20913c); }
+.stat-card.discos .stat-icon { background: linear-gradient(135deg, #9b59b6, #7d3c98); }
+.stat-card.prestamos .stat-icon { background: linear-gradient(135deg, #fd7e14, #e96b02); }
+.stat-card.pendientes .stat-icon { background: linear-gradient(135deg, #ffc107, #e0a800); }
+.stat-card.aprobados .stat-icon { background: linear-gradient(135deg, #17a2b8, #138496); }
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-info h3 {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+    line-height: 1.2;
+    margin: 0.3rem 0;
+}
+
+.stat-detail {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.stat-detail i {
+    margin-right: 0.3rem;
+}
+
+/* =========================================
+   GRÁFICOS
+   ========================================= */
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.chart-header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chart-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chart-header h3 i {
+    color: #509af0;
+}
+
+.chart-subtitle {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.chart-body {
+    padding: 1.5rem;
+    height: 300px;
+}
+
+/* =========================================
+   SECCIÓN DE PROGRESO
+   ========================================= */
+.progress-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.progress-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.progress-card h4 {
+    margin: 0 0 1.2rem 0;
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.progress-card h4 i {
+    color: #509af0;
+}
+
+.progress-item {
+    margin-bottom: 1rem;
+}
+
+.progress-item:last-child {
+    margin-bottom: 0;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.progress-label span {
+    color: #666;
+}
+
+.progress-label span i {
+    margin-right: 0.4rem;
+}
+
+.progress-label strong {
+    color: #333;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 1s ease;
+}
+
+.progress-fill.equipos { background: linear-gradient(90deg, #28a745, #20913c); }
+.progress-fill.discos { background: linear-gradient(90deg, #9b59b6, #7d3c98); }
+
+/* Resumen del mes */
+.summary-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.summary-list li {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.summary-list li:last-child {
+    border-bottom: none;
+}
+
+.summary-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 1rem;
+    font-size: 0.9rem;
+}
+
+.summary-icon.entregas { background: linear-gradient(135deg, #509af0, #0f5fb9); }
+.summary-icon.equipos { background: linear-gradient(135deg, #28a745, #20913c); }
+.summary-icon.discos { background: linear-gradient(135deg, #9b59b6, #7d3c98); }
+.summary-icon.prestamos { background: linear-gradient(135deg, #fd7e14, #e96b02); }
+
+.summary-label {
+    flex: 1;
+    color: #666;
+}
+
+.summary-value {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* =========================================
+   TABLAS
+   ========================================= */
+.dashboard-tables {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.table-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.table-header {
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.table-header.equipos {
+    background: linear-gradient(135deg, #28a745, #20913c);
+}
+
+.table-header.discos {
+    background: linear-gradient(135deg, #9b59b6, #7d3c98);
+}
+
+.table-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.view-all-btn {
+    color: white;
+    text-decoration: none;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.view-all-btn:hover {
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inventory-table thead {
+    background: #f8f9fa;
+}
+
+.inventory-table th {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.inventory-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.inventory-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.item-icon {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.item-icon.disco {
+    color: #9b59b6;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-badge.aprobado {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.pendiente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem !important;
+    color: #888;
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    margin: 0;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+footer {
+    background: linear-gradient(135deg, #0f5fb9, #6006b4);
+    padding: 1rem;
+    text-align: center;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 0;
+    color: white;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 1200px) {
+    .dashboard-charts {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-body {
+        height: 280px;
+    }
+}
+
+@media (max-width: 992px) {
+    .stats-cards {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .dashboard-tables {
+        grid-template-columns: 1fr;
+    }
+    
+    .progress-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+    
+    .welcome-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stats-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .inventory-table th,
+    .inventory-table td {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .welcome-text h2 {
+        font-size: 1.3rem;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Menu item activo */
+#navMenu .Menu li a.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffe600;
+    border-radius: 8px;
+}

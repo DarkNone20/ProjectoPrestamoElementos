@@ -182,14 +182,14 @@
                                         <i class="fas fa-laptop me-2"></i>Nombre del equipo:
                                     </label>
                                     <input type="text" name="nombre_equipo" class="form-control form-control-lg" 
-                                           placeholder="Ej: Laptop ProBook 450" required>
+                                           placeholder="Ej: D030E20" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">
                                         <i class="fas fa-barcode me-2"></i>Activo Fijo:
                                     </label>
                                     <input type="text" name="activo_fijo" class="form-control form-control-lg" 
-                                           placeholder="Ej: AF-2026-001">
+                                           placeholder="Ej: 6253254">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">

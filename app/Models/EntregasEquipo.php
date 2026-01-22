@@ -14,6 +14,9 @@ class EntregasEquipo extends Model
 
     protected $fillable = [
         'nombre_equipo',
+        'activo_fijo',
+        'marca',
+        'modelo',
         'fecha_entrega',
         'usuario',
         'archivo', 
@@ -21,6 +24,16 @@ class EntregasEquipo extends Model
         'auxiliar_recibe',
         'estado',
         'aprobado',
+        // Condiciones físicas
+        'con_memoria_ram',
+        'con_disco_duro',
+        'eliminar_info_disco',
+        'bisagras_buen_estado',
+        'tiene_golpes_rayones',
+        'viene_con_cargador',
+        'estado_bateria',
+        'motivo_entrega',
+        'observaciones_adicionales',
     ];
 
 

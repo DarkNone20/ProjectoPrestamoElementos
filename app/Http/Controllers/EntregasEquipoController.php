@@ -65,13 +65,26 @@ class EntregasEquipoController extends Controller
         //  VALIDACIÓN
         $request->validate([
             'nombre_equipo' => 'required|string|max:150',
+            'activo_fijo' => 'nullable|string|max:100',
+            'marca' => 'nullable|in:HP,Lenovo,Dell,Otro',
+            'modelo' => 'nullable|string|max:150',
             'usuario' => 'required|string|max:150',
             'auxiliar_entrega' => 'required|string|max:150',
             'auxiliar_recibe' => 'required|string|max:150',
             'fecha_entrega' => 'required|date',
-            'estado' => 'required|in:Remplazo,Libre',
+            'estado' => 'required|in:Equipo Libre,Equipo para reemplazo',
             'aprobado' => 'required|in:Pendiente,Aprobado',
-            'archivo' => 'nullable|file|max:5000'
+            'archivo' => 'nullable|file|max:5000',
+            // Condiciones físicas
+            'con_memoria_ram' => 'required|in:Si,No',
+            'con_disco_duro' => 'required|in:Si,No',
+            'eliminar_info_disco' => 'required|in:Si,No,N/A',
+            'bisagras_buen_estado' => 'required|in:Si,No',
+            'tiene_golpes_rayones' => 'required|in:Si,No',
+            'viene_con_cargador' => 'required|in:Si,No',
+            'estado_bateria' => 'nullable|in:Bueno,Regular,Malo,Sin batería',
+            'motivo_entrega' => 'nullable|in:Paz y salvo,Cambio de equipo,Otro',
+            'observaciones_adicionales' => 'nullable|string|max:1000',
         ]);
 
         // 2 MANEJO DE ARCHIVO
@@ -84,6 +97,9 @@ class EntregasEquipoController extends Controller
         //  GUARDAR EN BD
         $entrega = EntregasEquipo::create([
             'nombre_equipo' => $request->nombre_equipo,
+            'activo_fijo' => $request->activo_fijo,
+            'marca' => $request->marca,
+            'modelo' => $request->modelo,
             'usuario' => $request->usuario,
             'auxiliar_entrega' => $request->auxiliar_entrega,
             'auxiliar_recibe' => $request->auxiliar_recibe,
@@ -91,6 +107,16 @@ class EntregasEquipoController extends Controller
             'estado' => $request->estado,
             'aprobado' => $request->aprobado,
             'archivo' => $archivoPath,
+            // Condiciones físicas
+            'con_memoria_ram' => $request->con_memoria_ram,
+            'con_disco_duro' => $request->con_disco_duro,
+            'eliminar_info_disco' => $request->eliminar_info_disco,
+            'bisagras_buen_estado' => $request->bisagras_buen_estado,
+            'tiene_golpes_rayones' => $request->tiene_golpes_rayones,
+            'viene_con_cargador' => $request->viene_con_cargador,
+            'estado_bateria' => $request->estado_bateria,
+            'motivo_entrega' => $request->motivo_entrega,
+            'observaciones_adicionales' => $request->observaciones_adicionales,
         ]);
 
         //  REDIRECCIÓN SEGÚN ORIGEN

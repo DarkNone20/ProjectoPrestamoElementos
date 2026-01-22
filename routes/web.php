@@ -26,10 +26,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // ==========================
 // PAGINACIÓN / HOME
 // ==========================
-Route::get('/home', [HomeController::class, 'showHome'])
+Route::get('/home', [HomeController::class, 'dashboard'])
     ->middleware('auth')
     ->name('home');
 
+// Alias para dashboard (mismo contenido que home)
 Route::get('/dashboard', [HomeController::class, 'dashboard'])
     ->middleware('auth')
     ->name('dashboard');

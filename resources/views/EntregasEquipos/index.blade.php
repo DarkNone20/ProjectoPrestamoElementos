@@ -107,16 +107,28 @@
 
                     <!-- TABLA -->
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered align-middle mt-2">
+                        <table class="table table-hover table-bordered align-middle mt-2" style="font-size: 0.85rem;">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Equipo</th>
-                                    <th>Usuario</th>
+                                    <th>Activo Fijo</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Colaborador</th>
+                                    <th>Motivo</th>
                                     <th>Aux. Entrega</th>
                                     <th>Aux. Recibe</th>
                                     <th>Estado</th>
+                                    <th>Batería</th>
+                                    <th>RAM</th>
+                                    <th>Disco</th>
+                                    <th>Elim. Info</th>
+                                    <th>Bisagras</th>
+                                    <th>Golpes</th>
+                                    <th>Cargador</th>
+                                    <th>Observaciones</th>
                                     <th>Aprobado</th>
-                                    <th>Fecha Registro</th>
+                                    <th>Fecha</th>
                                     <th>Archivo</th>
                                     <th class="text-center">Acciones</th>
                                 </tr>
@@ -125,13 +137,59 @@
                                 @forelse ($entregas as $e)
                                     <tr>
                                         <td class="fw-bold">{{ $e->nombre_equipo }}</td>
+                                        <td>{{ $e->activo_fijo ?? '--' }}</td>
+                                        <td>{{ $e->marca ?? '--' }}</td>
+                                        <td>{{ $e->modelo ?? '--' }}</td>
                                         <td>{{ $e->usuario }}</td>
+                                        <td>{{ $e->motivo_entrega ?? '--' }}</td>
                                         <td>{{ $e->auxiliar_entrega }}</td>
                                         <td>{{ $e->auxiliar_recibe }}</td>
                                         <td class="text-center">
-                                            @if($e->estado == 'Libre') <span class="badge bg-warning text-dark">Libre</span>
-                                            @elseif($e->estado == 'Remplazo') <span class="badge bg-success">Remplazo</span>
+                                            @if($e->estado == 'Equipo Libre') <span class="badge bg-warning text-dark">Libre</span>
+                                            @elseif($e->estado == 'Equipo para reemplazo') <span class="badge bg-success">Reemplazo</span>
+                                            @else <span class="badge bg-secondary">{{ $e->estado }}</span>
                                             @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($e->estado_bateria == 'Bueno') <span class="badge bg-success">Bueno</span>
+                                            @elseif($e->estado_bateria == 'Regular') <span class="badge bg-warning text-dark">Regular</span>
+                                            @elseif($e->estado_bateria == 'Malo') <span class="badge bg-danger">Malo</span>
+                                            @else <span class="badge bg-secondary">{{ $e->estado_bateria ?? 'N/A' }}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($e->con_memoria_ram == 'Si') <i class="bi bi-check-circle-fill text-success"></i>
+                                            @else <i class="bi bi-x-circle-fill text-danger"></i>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($e->con_disco_duro == 'Si') <i class="bi bi-check-circle-fill text-success"></i>
+                                            @else <i class="bi bi-x-circle-fill text-danger"></i>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($e->eliminar_info_disco == 'Si') <i class="bi bi-check-circle-fill text-success"></i>
+                                            @elseif($e->eliminar_info_disco == 'No') <i class="bi bi-x-circle-fill text-danger"></i>
+                                            @else <span class="text-muted">N/A</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($e->bisagras_buen_estado == 'Si') <i class="bi bi-check-circle-fill text-success"></i>
+                                            @else <i class="bi bi-x-circle-fill text-danger"></i>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($e->tiene_golpes_rayones == 'Si') <i class="bi bi-x-circle-fill text-danger"></i>
+                                            @else <i class="bi bi-check-circle-fill text-success"></i>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($e->viene_con_cargador == 'Si') <i class="bi bi-check-circle-fill text-success"></i>
+                                            @else <i class="bi bi-x-circle-fill text-danger"></i>
+                                            @endif
+                                        </td>
+                                        <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $e->observaciones_adicionales }}">
+                                            {{ $e->observaciones_adicionales ?? '--' }}
                                         </td>
                                         <td class="text-center">
                                             @if($e->aprobado == 'Pendiente')
@@ -144,7 +202,7 @@
                                                 <span class="badge bg-success">Aprobado</span>
                                             @endif
                                         </td>
-                                        <td>{{ $e->created_at->format('Y-m-d H:i') }}</td>
+                                        <td>{{ $e->created_at->format('Y-m-d') }}</td>
                                         <td class="text-center">
                                             @if($e->archivo)
                                                 <a href="{{ asset('storage/' . $e->archivo) }}" target="_blank" class="btn btn-sm btn-info text-white"><i class="bi bi-eye"></i></a>
@@ -153,8 +211,8 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            <div class="d-flex gap-2 justify-content-center">
-                                                <!-- EDITAR (ABRE EN OTRA VENTANA) -->
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <!-- EDITAR -->
                                                 <a href="{{ route('entregasEquipos.edit', $e->id) }}" target="_blank" class="btn btn-sm btn-warning">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
@@ -167,7 +225,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="9" class="text-center text-muted py-4">No hay registros.</td></tr>
+                                    <tr><td colspan="21" class="text-center text-muted py-4">No hay registros.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>

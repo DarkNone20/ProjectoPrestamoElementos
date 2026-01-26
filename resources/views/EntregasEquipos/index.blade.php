@@ -110,27 +110,27 @@
                         <table class="table table-hover table-bordered align-middle mt-2" style="font-size: 0.8rem; width: 100%; table-layout: auto;">
                             <thead class="table-dark">
                                 <tr>
-                                    <th class="text-nowrap">Equipo</th>
-                                    <th class="text-nowrap">Activo Fijo</th>
-                                    <th class="text-nowrap">Marca</th>
-                                    <th class="text-nowrap">Modelo</th>
-                                    <th class="text-nowrap">Colaborador</th>
-                                    <th class="text-nowrap">Motivo</th>
-                                    <th class="text-nowrap">Aux. Entrega</th>
-                                    <th class="text-nowrap">Aux. Recibe</th>
-                                    <th class="text-nowrap">Estado</th>
-                                    <th class="text-nowrap">Batería</th>
-                                    <th class="text-nowrap">RAM</th>
-                                    <th class="text-nowrap">Disco</th>
-                                    <th class="text-nowrap">Elim.</th>
-                                    <th class="text-nowrap">Bisagras</th>
-                                    <th class="text-nowrap">Golpes</th>
-                                    <th class="text-nowrap">Cargador</th>
-                                    <th class="text-nowrap">Obs.</th>
-                                    <th class="text-nowrap">Aprobado</th>
-                                    <th>Fecha</th>
-                                    <th>Archivo</th>
-                                    <th class="text-center">Acciones</th>
+                                    <th class="text-nowrap" title="Nombre del Equipo">Equipo</th>
+                                    <th class="text-nowrap" title="Activo Fijo">Act. Fijo</th>
+                                    <th class="text-nowrap" title="Marca del Equipo">Marca</th>
+                                    <th class="text-nowrap" title="Modelo del Equipo">Modelo</th>
+                                    <th class="text-nowrap" title="Nombre del Colaborador">Colaborador</th>
+                                    <th class="text-nowrap" title="Motivo de Entrega">Motivo</th>
+                                    <th class="text-nowrap" title="Auxiliar que Entrega">Aux. Ent.</th>
+                                    <th class="text-nowrap" title="Auxiliar que Recibe">Aux. Rec.</th>
+                                    <th class="text-nowrap" title="Estado del Equipo">Estado</th>
+                                    <th class="text-nowrap" title="Estado de la Batería">Batería</th>
+                                    <th class="text-nowrap" title="¿Con Memoria RAM?">RAM</th>
+                                    <th class="text-nowrap" title="¿Con Disco Duro?">Disco</th>
+                                    <th class="text-nowrap" title="¿Eliminar Info del Disco?">Elim.</th>
+                                    <th class="text-nowrap" title="¿Bisagras en Buen Estado?">Bisag.</th>
+                                    <th class="text-nowrap" title="¿Tiene Golpes o Rayones?">Golpes</th>
+                                    <th class="text-nowrap" title="¿Viene con Cargador?">Carg.</th>
+                                    <th class="text-nowrap" title="Observaciones Adicionales">Obs.</th>
+                                    <th class="text-nowrap" title="Estado de Aprobación">Aprob.</th>
+                                    <th class="text-nowrap" title="Fecha de Registro">Fecha</th>
+                                    <th class="text-nowrap" title="Archivo Adjunto">Archivo</th>
+                                    <th class="text-center" title="Acciones">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>

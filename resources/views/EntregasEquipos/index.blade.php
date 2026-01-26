@@ -65,7 +65,7 @@
 
     <div class="main-content-wrapper">
         <main id="content">
-            <div class="container py-4">
+            <div class="container-fluid px-4 py-4">
                 <div class="card shadow p-4 card-custom">
 
                     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
@@ -107,27 +107,27 @@
 
                     <!-- TABLA -->
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered align-middle mt-2" style="font-size: 0.85rem;">
+                        <table class="table table-hover table-bordered align-middle mt-2" style="font-size: 0.8rem; width: 100%; table-layout: auto;">
                             <thead class="table-dark">
                                 <tr>
-                                    <th>Equipo</th>
-                                    <th>Activo Fijo</th>
-                                    <th>Marca</th>
-                                    <th>Modelo</th>
-                                    <th>Colaborador</th>
-                                    <th>Motivo</th>
-                                    <th>Aux. Entrega</th>
-                                    <th>Aux. Recibe</th>
-                                    <th>Estado</th>
-                                    <th>Batería</th>
-                                    <th>RAM</th>
-                                    <th>Disco</th>
-                                    <th>Elim. Info</th>
-                                    <th>Bisagras</th>
-                                    <th>Golpes</th>
-                                    <th>Cargador</th>
-                                    <th>Observaciones</th>
-                                    <th>Aprobado</th>
+                                    <th class="text-nowrap">Equipo</th>
+                                    <th class="text-nowrap">Activo Fijo</th>
+                                    <th class="text-nowrap">Marca</th>
+                                    <th class="text-nowrap">Modelo</th>
+                                    <th class="text-nowrap">Colaborador</th>
+                                    <th class="text-nowrap">Motivo</th>
+                                    <th class="text-nowrap">Aux. Entrega</th>
+                                    <th class="text-nowrap">Aux. Recibe</th>
+                                    <th class="text-nowrap">Estado</th>
+                                    <th class="text-nowrap">Batería</th>
+                                    <th class="text-nowrap">RAM</th>
+                                    <th class="text-nowrap">Disco</th>
+                                    <th class="text-nowrap">Elim.</th>
+                                    <th class="text-nowrap">Bisagras</th>
+                                    <th class="text-nowrap">Golpes</th>
+                                    <th class="text-nowrap">Cargador</th>
+                                    <th class="text-nowrap">Obs.</th>
+                                    <th class="text-nowrap">Aprobado</th>
                                     <th>Fecha</th>
                                     <th>Archivo</th>
                                     <th class="text-center">Acciones</th>
@@ -188,8 +188,8 @@
                                             @else <i class="bi bi-x-circle-fill text-danger"></i>
                                             @endif
                                         </td>
-                                        <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $e->observaciones_adicionales }}">
-                                            {{ $e->observaciones_adicionales ?? '--' }}
+                                        <td style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $e->observaciones_adicionales }}">
+                                            {{ Str::limit($e->observaciones_adicionales, 15) ?? '--' }}
                                         </td>
                                         <td class="text-center">
                                             @if($e->aprobado == 'Pendiente')
